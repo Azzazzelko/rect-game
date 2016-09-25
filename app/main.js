@@ -41,13 +41,15 @@ var game = {   //кросбраузерная ф-ция для упрвлени�
   
 };
 
-var Button = function(x, y, w, h, color, txt){
+var Button = function(x, y, w, h, color, txt, name, fSize){
   this.x = x;
   this.y = y;
   this.w = w;
   this.h = h;
   this.color = color;
   this.txt = txt;
+  this.name = name;
+  this.fSize = fSize;
 };
 Button.prototype = {
 
@@ -57,7 +59,7 @@ Button.prototype = {
 
     ctx.fillStyle = "white";
     ctx.textAlign="center";
-    ctx.font = '30px Arial';
+    ctx.font = this.fSize + 'px Arial';
     ctx.textBaseline="middle"; 
     ctx.fillText(this.txt, this.x+this.w/2, this.y+this.h/2);
   }
@@ -93,9 +95,13 @@ Rect.prototype = { //функции для нашего класса-кубик
       case "right" : 
       this.x += this.w+padd;
       break;
-
     }
-    
+
+  },
+
+  randomPosition : function(){
+    this.x = getRandomInt(1,7)*(this.w+padd)+padd;
+    this.y = getRandomInt(2,8)*(this.h+padd)+padd;
   }
   
 };
@@ -117,9 +123,10 @@ for (var i = 0; i < 10; i++){ //заполняем объект
 };
 
 
-function createMenu(txtArr){  //создаем главное меню
+function createMenu(txtArr, nameArr){  //создаем главное меню
 
   var menu = [];
+  var names = nameArr;
   var txt = txtArr;
   var amounts = txtArr.length;
   
@@ -127,28 +134,20 @@ function createMenu(txtArr){  //создаем главное меню
   var _width = width/2-200/2;
 
   for (var i = 0; i < amounts; i++){
-    menu.push( new Button( _width , _height+i*75 , 200, 50, "black", txt[i]) );
+    menu.push( new Button( _width , _height+i*75 , 200, 50, "black", txt[i], names[i], 30 ) );
   };
 
   return menu;
 
 };
 
-var menu = createMenu(["Играть","Настройки"]);
+var menu = createMenu(["Играть","Настройки"],["play", "options"]);
+var header = new Rect( 0, 0, width, 55, "black" );
+var bRestart = new Button( width-90-5, 7, 90, 40, "#34BACA", "Restart", "restart", 25 );
 
 var pl = new Rect(padd,60,50,50,"black");  //игрок
 var box = new Rect(padd,60,50,50,"blue"); //бокс
 var door = new Rect(padd,60,50,50, "rgba(231, 23, 32, 0.8)"); //дверь
-
-door.randomPosition = function(){ //Рандомит позицию двери
-  door.x = getRandomInt(1,7)*(door.w+padd)+padd;
-  door.y = getRandomInt(2,8)*(door.h+padd)+padd;
-};
-
-box.randomPosition = function(){ //Рандомит позицию бокса
-  box.x = getRandomInt(1,7)*(box.w+padd)+padd;
-  box.y = getRandomInt(2,8)*(box.h+padd)+padd;
-};
 
 var isBorder = { //принимает объект, возвращает стоит ли с запрашиваеомй границы канвы
 
@@ -217,34 +216,115 @@ window.onkeydown = function(e){ //события клацанья
   
 };
 
+window.onmousedown = function(e){
 
-box.randomPosition();  //рандомим позицию бокса
-door.randomPosition(); //рандомим позицию двери
+  var x = e.pageX-10;
+  var y = e.pageY-10;
 
+  for ( i in menu ){
+    if( isCursorInButton(x,y,menu[i]) ){
+      if ( menu[i].name == "play" ){
+        levels[1]();  
+        game.gameEngineStart(gameLoops.plLevel);
+      };
+    };
+  };
+
+  if( isCursorInButton(x,y,bRestart) ){
+    levels[1]();  
+    game.gameEngineStart(gameLoops.plLevel);
+  };
+
+};
+
+function isCursorInButton(x,y,but){
+
+  return x >= but.x && 
+  x <= but.x+but.w && 
+  y >= but.y && 
+  y <= but.y+but.h
+
+};
+
+
+var Image = function(src){
+  this.src = src;
+  this.loaded = false;
+
+  var img = document.createElement('img');
+
+  img.onload = function(){
+    this.loaded = true;
+  }.bind(this);
+
+  img.src = src;
+
+  this.dom = img;
+};
+
+Image.prototype = {
+
+  drawImg : function(){
+
+    if ( !this.loaded ) return;
+
+    ctx.drawImage(this.dom,0,0);
+
+  }
+
+};
+
+var bg = new Image("img/rect-bg.jpg");
+
+var walls = [];
+
+var levels = {
+
+  1 : function(){
+
+    var _walls = [];
+    var arr = [
+    [2,3],[2,4],[2,5],[2,6],[3,0],[3,6],[3,8],[4,2],[5,1],[5,2],[5,3],[5,7],[6,4],[7,4],[7,6],[8,0],[8,1],[8,8],[9,0],[9,4],[9,5]
+    ];
+
+    for (var i = 0; i < arr.length; i++){ 
+      _walls.push( new Rect(5+arr[i][1]*55, 5+arr[i][0]*55, 50, 50, "#622DD1") );
+    };
+
+    box.x = 5+2*55;
+    box.y = 5+8*55;
+
+    walls = _walls;
+
+  }
+
+};
 
 var gameLoops = {
 
   plLevel : function(){
 
+    clearRect(0,0,width,height);
+
     for ( i in matrix ){
       matrix[i].draw();
     };
 
-    clearRect(0,0,width,55);
+    for ( i in walls ){
+      walls[i].draw();
+    };
+
+    header.draw();
+    bRestart.draw();
 
     pl.draw();
-
     box.draw();
-
     door.draw();
 
     if ( box.x == door.x && box.y == door.y ){
       console.log("WIN!");
 
-      box.randomPosition();
-      door.randomPosition();
-
-      game.gameEngineStart(gameLoops.plLevel);
+      game.gameEngineStart(gameLoops.menu);
     };
 
   },
@@ -252,6 +332,8 @@ var gameLoops = {
   menu : function(){
 
     clearRect(0,0,width,height);
+
+    bg.drawImg();
 
     for ( i in menu ){
       menu[i].draw();
@@ -262,3 +344,7 @@ var gameLoops = {
 };
 
 game.gameEngineStart(gameLoops.menu);
+
+
+
+
