@@ -1,11 +1,11 @@
 var o = require('./_objects.js');
 var levels = require('./_levels.js');
 var game = require('./_gameEngine.js');
-var gloo = require('./_gameLoops.js');
+var gLoo = require('./_gameLoops.js');
 var hf = require('./_helperFunctions.js');
 var C = require('./_const.js');
 
-var gameLoops = gloo;
+var gameLoops = gLoo;
 
 var isNear = { //принимает 2 объекта, возвращает стоит ли с запрашиваемой стороны 1ый от 2го.
     
@@ -55,8 +55,8 @@ var isNear = { //принимает 2 объекта, возвращает ст�
 };
 
 function moveRects(direction){  //(описываем границы движения) разрешает движение в пределах уровня
- 
-  if ( isNear[direction](o.pl, o.box) && !hf.isBorder[direction](o.box)){ //если рядом с ящиком и ящик не у границ, двигаем.
+   
+  if ( isNear[direction](o.pl, o.box) && !hf.isBorder[direction](o.box) && !isNear[direction](o.box, o.walls) ){ //если рядом с ящиком и ящик не у границ, двигаем.
     o.pl.move(direction);
     o.box.move(direction);
   } else if( !isNear[direction](o.pl, o.box) && !hf.isBorder[direction](o.pl) && !isNear[direction](o.pl, o.walls) ){ //если не рядом с ящиком и не рядом с границей, двигаемся.
@@ -93,16 +93,16 @@ window.onmousedown = function(e){
   var y = e.pageY-10;
 
   for ( i in o.menu ){
-    if( isCursorInButton(x,y,o.menu[i]) ){
-      if ( o.menu[i].name == "play" ){
-        levels[1](o.box.x,o.box.y);  
+    if( isCursorInButton(x,y,o.menu[i]) ){  
+      if ( o.menu[i].name == "play" && gLoo.status == "menu" ){    //если нажата кнопка играть, запускаем уровень.
+        levels[1]();  
         game.gameEngineStart(gameLoops.plLevel);
       };
     };
   };
 
   if( isCursorInButton(x,y,o.bRestart) ){
-    levels[1](o.box.x,o.box.y);  
+    levels[1]();  
     game.gameEngineStart(gameLoops.plLevel);
   };
 };

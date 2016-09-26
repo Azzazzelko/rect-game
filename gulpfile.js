@@ -1,6 +1,6 @@
 var gulp = require("gulp"),
 	plumber = require("gulp-plumber"),
-	browserSync = require("browser-sync");
+	browserSync = require("browser-sync"),
 	browserify = require('gulp-browserify'),
 	rename = require("gulp-rename");
 
@@ -23,6 +23,7 @@ gulp.task("watch1", function(){
 
 gulp.task('scripts', function() {
 	gulp.src('app/js/main.js')
+		.pipe(plumber())
 		.pipe(browserify({
 			debug : true
 		}))
@@ -36,5 +37,5 @@ gulp.task('watch2', function(){
 		], ["scripts"]);
 });
 
-gulp.task("default", ["server", "scripts", "watch1", "watch2"]);
+gulp.task("default", ["server", "scripts", "watch2", "watch1"]);
 

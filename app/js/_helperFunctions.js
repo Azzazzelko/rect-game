@@ -1,4 +1,5 @@
 var canvas = require('./_canvas.js');
+var o = require('./_objects.js');
 var C = require('./_const.js');
 
 var cnv = canvas.cnv;
@@ -30,6 +31,12 @@ module.exports = {
     right : function(obj){
       return obj.x == C.WIDTH - obj.w - C.PDNG
     }
+  },
+
+  isWin : function(){ //победили?
+
+    return o.box.x == o.door.x && o.box.y == o.door.y;
+
   }
 
 };

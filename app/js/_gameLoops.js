@@ -7,32 +7,45 @@ module.exports = gameLoops =  {
 
   plLevel : function(){
 
-    hf.clearRect(0,0,C.WIDTH,C.HEIGHT);
+    gameLoops.status = "plLevel"; 
 
+    hf.clearRect(0,0,C.WIDTH,C.HEIGHT); //очистка области
+
+    //выводим матричное поле игры
     for ( i in o.matrix ){
       o.matrix[i].draw();
     };
 
+    //выводим стены\преграды
     for ( i in o.walls ){
       o.walls[i].draw();
     };
 
+    //**********************
+    //****Выводим Хедер*****
+    //**********************
     o.header.draw();
     o.bRestart.draw();
 
+    //**********************
+    //****Выводим объекты*****
+    //**********************
     o.pl.draw();
     o.box.draw();
     o.door.draw();
 
-    if ( o.box.x == o.door.x && o.box.y == o.door.y ){
+    //**********************
+    //****Если победили*****
+    //**********************
+    if ( hf.isWin() ){
       console.log("WIN!");
-
       game.gameEngineStart(gameLoops.menu);
     };
 
   },
 
   menu : function(){
+    gameLoops.status = "menu";
 
     hf.clearRect(0,0,C.WIDTH,C.HEIGHT);
 
@@ -42,6 +55,8 @@ module.exports = gameLoops =  {
       o.menu[i].draw();
     };
 
-  }
+  },
+
+  status : ""
 
 };
