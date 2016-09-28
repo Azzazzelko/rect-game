@@ -11,7 +11,7 @@ module.exports = {
 		];				  //придуманный массив со стенками
 
 		for (var i = 0; i < arr.length; i++){ 
-			_walls.push( new Rect(C.PDNG+arr[i][1]*(50+C.PDNG), C.PDNG+arr[i][0]*(50+C.PDNG), 50, 50, "#622DD1") );
+			_walls.push( new Rect(C.PDNG+arr[i][1]*(50+C.PDNG), C.PDNG+arr[i][0]*(50+C.PDNG), 50, 50, "#622DA1") );
 		};				  //заполняем массив walls
 
 		o.box.setPosition( C.PDNG+2*(50+C.PDNG), C.PDNG+8*(50+C.PDNG) );

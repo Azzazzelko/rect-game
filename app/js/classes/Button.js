@@ -14,15 +14,19 @@ module.exports = Button = function(x, y, w, h, color, txt, name, fSize){
   this.name = name;
   this.fSize = fSize;
 
-  this.draw = function(){
+  this.draw = function(noCenter, padd){
+
+    var _padd = padd || 5;
+    var _x = ( !noCenter ) ? this.x+this.w/2 : this.x+_padd;
+
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, this.w, this.h);
 
     ctx.fillStyle = "white";
-    ctx.textAlign="center";
+    ctx.textAlign = ( !noCenter ) ? "center" : "start";
     ctx.font = this.fSize + 'px Arial';
     ctx.textBaseline="middle"; 
-    ctx.fillText(this.txt, this.x+this.w/2, this.y+this.h/2);
+    ctx.fillText(this.txt, _x, this.y+this.h/2);
   };
 
 };

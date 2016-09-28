@@ -1,13 +1,16 @@
-var padd = 1; 						//паддинг, который я хочу чтобы был, меж квадратами
-var width = padd + (padd+50)*9; 	//ширина канвы
-var height = padd + (padd+50)*10;   //высота канвы
+var PADD = 1; 						//паддинг, который я хочу чтобы был, меж квадратами
+var WIDTH = PADD + (PADD+50)*9; 	//ширина канвы
+var HEIGHT = PADD + (PADD+50)*10;   //высота канвы
+var CNV_BORDER = 2;
 
 module.exports = {
 
-	PDNG : padd,
+	PDNG : PADD,
 
-	WIDTH : width,
+	WIDTH : WIDTH,
 
-	HEIGHT : height
+	HEIGHT : HEIGHT,
+
+	CNV_BORDER : CNV_BORDER
 
 };

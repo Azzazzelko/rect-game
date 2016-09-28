@@ -1,7 +1,7 @@
 var C = require('./_const.js');
 var o = require('./_objects.js');
 var hf = require('./_helperFunctions.js');
-var game = require('./_gameEngine.js');
+var engin = require('./_engine.js');
 
 module.exports = gameLoops =  {
 
@@ -25,6 +25,7 @@ module.exports = gameLoops =  {
     //****Выводим Хедер*****
     //**********************
     o.header.draw();
+    o.stopWatch.draw(1,10);
     o.bRestart.draw();
 
     //**********************
@@ -39,7 +40,7 @@ module.exports = gameLoops =  {
     //**********************
     if ( hf.isWin() ){
       console.log("WIN!");
-      game.gameEngineStart(gameLoops.menu);
+      engin.gameEngineStart(gameLoops.menu);
     };
 
   },

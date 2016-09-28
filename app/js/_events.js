@@ -1,6 +1,7 @@
 var o = require('./_objects.js');
+var sw = require('./_stopwatch.js');
 var levels = require('./_levels.js');
-var game = require('./_gameEngine.js');
+var engin = require('./_engine.js');
 var gLoo = require('./_gameLoops.js');
 var hf = require('./_helperFunctions.js');
 var C = require('./_const.js');
@@ -62,7 +63,6 @@ function moveRects(direction){  //(описываем границы движе�
   } else if( !isNear[direction](o.pl, o.box) && !hf.isBorder[direction](o.pl) && !isNear[direction](o.pl, o.walls) ){ //если не рядом с ящиком и не рядом с границей, двигаемся.
     o.pl.move(direction);
   }
-
 };
 
 function isCursorInButton(x,y,but){
@@ -95,14 +95,16 @@ window.onmousedown = function(e){
   for ( i in o.menu ){
     if( isCursorInButton(x,y,o.menu[i]) ){  
       if ( o.menu[i].name == "play" && gLoo.status == "menu" ){    //если нажата кнопка играть, запускаем уровень.
+        sw.start();
         levels[1]();  
-        game.gameEngineStart(gameLoops.plLevel);
+        engin.gameEngineStart(gameLoops.plLevel);
       };
     };
   };
 
   if( isCursorInButton(x,y,o.bRestart) ){
+    sw.reset();
     levels[1]();  
-    game.gameEngineStart(gameLoops.plLevel);
+    engin.gameEngineStart(gameLoops.plLevel);
   };
 };

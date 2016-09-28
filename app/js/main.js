@@ -1,4 +1,4 @@
-var game = require('./_gameEngine.js'),
+var engin = require('./_engine.js'),
     Button = require('./classes/Button.js'),
     Rect = require('./classes/Rect.js'),
     Image = require('./classes/Image.js'),
@@ -7,4 +7,4 @@ var game = require('./_gameEngine.js'),
     events = require('./_events.js');
     canvas = require('./_canvas.js');
 
-game.gameEngineStart(gameLoops.menu);
+engin.gameEngineStart(gameLoops.menu);

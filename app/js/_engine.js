@@ -2,6 +2,8 @@
 //**кросбраузерное упрвление циклами игры**
 //*****************************************
 
+var gameEngine;
+
 var nextGameStep = (function(){
 	return requestAnimationFrame ||
 	webkitRequestAnimationFrame ||
