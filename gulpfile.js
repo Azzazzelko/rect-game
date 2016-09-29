@@ -4,25 +4,8 @@ var gulp = require("gulp"),
 	browserify = require('gulp-browserify'),
 	rename = require("gulp-rename");
 
-gulp.task("server", function() {
-	browserSync({
-		port: 9000,
-		server: {
-			baseDir: "app"
-		}
-	});
-});
-
-gulp.task("watch1", function(){
-	gulp.watch([
-		"app/**/*.html",
-		"app/**/*.js",
-		"app/**/*.css"
-	]).on("change", browserSync.reload);
-});
-
 gulp.task('scripts', function() {
-	gulp.src('app/js/main.js')
+	return gulp.src('app/js/main.js')
 		.pipe(plumber())
 		.pipe(browserify({
 			debug : true
@@ -31,11 +14,35 @@ gulp.task('scripts', function() {
 		.pipe(gulp.dest('./app/'))
 });
 
-gulp.task('watch2', function(){
-	gulp.watch([
-		"app/**/*.js",
-		], ["scripts"]);
+gulp.task("server", ["scripts"], function() {
+	browserSync({
+		port: 9000,
+		server: {
+			baseDir: "app"
+		}
+	});
+
+	gulp.watch("app/**/*.js", ['js-watch']);
 });
 
-gulp.task("default", ["server", "scripts", "watch2", "watch1"]);
+gulp.task('js-watch', ['scripts'], function (done) {
+    browserSync.reload();
+    done();
+});
+
+// gulp.task("watch1", ["scripts"], function(){
+// 	gulp.watch([
+// 		"app/**/*.html",
+// 		"app/**/*.js",
+// 		"app/**/*.css"
+// 	]).on("change", browserSync.reload);
+// });
+
+// gulp.task('js-watch', ["scripts"], function(){
+// 	gulp.watch([
+// 		"app/**/*.js",
+// 		], ["scripts"]);
+// });
+
+gulp.task("default", ["server", "scripts"]);
 

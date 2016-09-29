@@ -68,26 +68,37 @@ function moveRects(direction){  //(описываем границы движе�
   }
 };
 
-function isCursorInButton(x,y,but){
+function isCursorInButton(x,y,but){ //возвращает тру, если курсор попал в координаты объекта
   return x >= but.x && 
   x <= but.x+but.w && 
   y >= but.y && 
   y <= but.y+but.h
 };
 
+function loadLevel(number){ //загрузка уровня
+  levels[number](); 
+  gameLoops.currentLevel = number; 
+  engin.gameEngineStart(gameLoops.plLevel);
+};
+
 window.onkeydown = function(e){ //событие нажатия клавишь
 
-  if ( e.key == "d" || e.key == "ArrowRight" )  
-    moveRects("right");
+  if ( gLoo.status == "game" ){ //передвигаться только если идет игра.
 
-  if ( e.key == "s" || e.key == "ArrowDown" )  
-    moveRects("down");
+    if ( e.key == "d" || e.key == "ArrowRight" )  
+      moveRects("right");
 
-  if ( e.key == "w" || e.key == "ArrowUp" )
-    moveRects("up");
+    if ( e.key == "s" || e.key == "ArrowDown" )  
+      moveRects("down");
 
-  if ( e.key == "a" || e.key == "ArrowLeft" )
-    moveRects("left");
+    if ( e.key == "w" || e.key == "ArrowUp" )
+      moveRects("up");
+
+    if ( e.key == "a" || e.key == "ArrowLeft" )
+      moveRects("left");
+
+  };
+
 };
 
 window.onmousedown = function(e){
@@ -96,32 +107,45 @@ window.onmousedown = function(e){
   var y = e.pageY-canvas.cnv.offsetTop;
 
   for ( i in o.menu ){
-    if( isCursorInButton(x,y,o.menu[i]) ){  
-      if ( o.menu[i].name == "play" && gLoo.status == "menu" ){    //если нажата кнопка играть, запускаем уровень.
+    if( isCursorInButton(x,y,o.menu[i]) && gLoo.status == "menu" ){  
+      if ( o.menu[i].name == "play" ){    //если нажата кнопка играть, запускаем уровень.
         sw.start();
-        levels[1](); 
-        gameLoops.currentLevel = "1"; 
-        engin.gameEngineStart(gameLoops.plLevel);
+        loadLevel(1);
       };
     };
   };
 
   for ( i in o.winPopUp ){
-    if( isCursorInButton(x,y,o.winPopUp[i]) ){
-      if ( o.winPopUp[i].name == "pop_exit" && gLoo.status == "win"){
+    if( isCursorInButton(x,y,o.winPopUp[i]) && gLoo.status == "win" ){
+      if ( o.winPopUp[i].name == "pop_exit" ){
         engin.gameEngineStart(gameLoops.menu);
       };
     };
   };
 
-  if( isCursorInButton(x,y,o.bRestart) ){
-    sw.reset();
-    levels[1]();
-    gameLoops.currentLevel = "1"; 
-    engin.gameEngineStart(gameLoops.plLevel);
+  for ( i in o.pausePopUp ){
+    if( isCursorInButton(x,y,o.pausePopUp[i]) && gLoo.status == "pause" ){
+      if ( o.pausePopUp[i].name == "return" ){
+        sw.start();
+        engin.gameEngineStart(gameLoops.plLevel);
+      } else if ( o.pausePopUp[i].name == "restart" ){
+        sw.reset();
+        loadLevel(1);
+      } else if ( o.pausePopUp[i].name == "exit" ){
+        sw.reset();
+        engin.gameEngineStart(gameLoops.menu);
+      };
+    };
+  };
+  
+  if( isCursorInButton(x,y,o.bPause) && gLoo.status == "game" ){
+    sw.pauseTimer();
+    o.bgOpacity.draw();
+    engin.gameEngineStart(gameLoops.pause);
   };
 
-  if( isCursorInButton(x,y,o.bFullScr) ){
-   ( !fs.status ) ? fs.launchFullScreen(canvas.cnv) : fs.canselFullScreen(); 
- };
+  if( isCursorInButton(x,y,o.bFullScr) && gLoo.status == "game"){
+    ( !fs.status ) ? fs.launchFullScreen(canvas.cnv) : fs.canselFullScreen(); 
+  };
+
 };

@@ -1,7 +1,6 @@
 var o = require('./_objects.js');
 var game = require('./_gameLoops.js');
 
-// var currentButton = "Start";
 var pause = 0;
 var beginTime = 0;
 var currentTime = 0;
@@ -28,12 +27,12 @@ function upTime(countFrom) {
 module.exports = { 
 
 	start : function() {
-		if (game.status == 'plLevel' || gameLoops.status == "menu") {
+		if (game.status == 'game' || gameLoops.status == "menu" || gameLoops.status == "pause") {
 			upTime(new Date());
 			var nowT = new Date();
 			beginTime = nowT.getTime();
 		} else {
-			pauseTimer();
+			this.reset();
 		};
 	},
 

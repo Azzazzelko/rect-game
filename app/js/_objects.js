@@ -13,17 +13,18 @@ function createMatrix(){
   return matrix
 };
 
-function createMenu(txtArr, nameArr){  //создаем главное меню
+function createMenu(txtArr, nameArr, fontsize){  //создаем главное меню
   var menu = [];
   var names = nameArr;
   var txt = txtArr;
+  var _fontsize = fontsize;
   var amounts = txtArr.length;
   
   var _height = (C.HEIGHT/2) - (75*amounts/2); 
   var _width = C.WIDTH/2-200/2;
 
   for (var i = 0; i < amounts; i++){
-    menu.push( new Button( _width, _height+i*75, 200, 50, "black", txt[i], names[i], 30 ) );
+    menu.push( new Button( _width, _height+i*75, 200, 50, "black", txt[i], names[i], _fontsize ) );
   };
 
   return menu;
@@ -43,28 +44,55 @@ function createWinPopUp(){
   return winPopUp;
 };
 
+function createPausePopUp(txtArr, nameArr, fontsize){
+
+  var names = nameArr;
+  var txt = txtArr;
+  var _fontsize = fontsize;
+  var amounts = txtArr.length;
+
+  var _height = (C.HEIGHT/2) - (60*amounts/2); 
+  var _width = C.WIDTH/2-150/2;
+
+  var pausePopUp = [new Rect( C.WIDTH/2-200/2, _height-30, 200, 60*amounts+40, "red" )];
+
+  for (var i=0; i<amounts; i++){
+    pausePopUp.push( new Button( _width, _height+i*60, 150, 40, "black", txt[i], names[i], _fontsize ) ); 
+  };
+
+  return pausePopUp;
+};
+
 var grd = cnvs.ctx.createLinearGradient(C.WIDTH, 0, C.WIDTH, 50+C.PDNG);
 grd.addColorStop(0, 'black');   
 grd.addColorStop(1, 'grey');
 
+
+
+
 //menu
-var menu = createMenu(["Играть","Настройки"],["play", "options"]);
+var menu = createMenu(["Играть","Настройки"],["play", "options"], "30");
 
 
-//bg 
+//background 
 var matrix = createMatrix(); //bg уровня
 var bg = new Image("img/rect-bg.jpg"); //bg в главном меню
+var bgOpacity = new Rect(0, 0, C.WIDTH, C.HEIGHT, "rgba(0, 0, 0, 0.5)");
 
 
 //header
 var header = new Rect( 0, 0, C.WIDTH, 50+C.PDNG, grd );
 var bFullScr = new Button( C.WIDTH-50-5, header.h/2-C.CNV_BORDER/2 - 40/2, 50, 40, "#34BACA", "FS", "fullScr", 25 );
-var bRestart = new Button( C.WIDTH-90-5-bFullScr.w-10, header.h/2-C.CNV_BORDER/2 - 40/2, 90, 40, "#34BACA", "Заново", "restart", 25 );
 var stopWatch = new Button( 5, header.h/2-C.CNV_BORDER/2 - 40/2, 145, 40, "#34BACA", "00 : 00 : 00", "stopwatch", 25 );
+var bPause = new Button( C.WIDTH-90-5-bFullScr.w-10, header.h/2-C.CNV_BORDER/2 - 40/2, 90, 40, "#34BACA", "Пауза", "pause", 25 );
 
 
 //win pop-up
 var winPopUp = createWinPopUp();
+
+
+//pause pop-up
+var pausePopUp = createPausePopUp(["Вернуться", "Заново", "Выход"],["return", "restart", "exit"], "20");
 
 
 //playable obj
@@ -73,19 +101,24 @@ var box = new Rect(C.PDNG,C.PDNG*2+50,50,50,"#3D5DFF"); //бокс
 var door = new Rect(C.PDNG,C.PDNG*2+50,50,50, "rgba(231, 23, 32, 0.8)"); //дверь
 var walls = []; //стены на уровне, заполняется выбранным уровнем.
 
+
+
+
 module.exports = {
 
 	matrix : matrix,
 	menu : menu,
 	header : header,
   stopWatch : stopWatch,
-	bRestart : bRestart,
+  bPause : bPause,
   bFullScr : bFullScr,
-	pl : pl,
-	box : box,
-	door : door,
-	bg : bg,
-	walls : walls,
-  winPopUp : winPopUp
+  pl : pl,
+  box : box,
+  door : door,
+  bg : bg,
+  walls : walls,
+  winPopUp : winPopUp,
+  pausePopUp : pausePopUp,
+  bgOpacity : bgOpacity
 
 };

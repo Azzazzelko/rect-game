@@ -11,8 +11,6 @@ module.exports = Rect = function(x, y, w, h, color){ //класс кубик
   this.h = h;
   this.color = color;
 
-
-
   this.draw = function(){
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, this.w, this.h);
@@ -43,5 +41,6 @@ module.exports = Rect = function(x, y, w, h, color){ //класс кубик
   this.setPosition = function(x,y){
     this.x = x;
     this.y = y;
-  }
+  };
+
 };

@@ -7,7 +7,7 @@ module.exports = gameLoops =  {
 
   plLevel : function(){
 
-    gameLoops.status = "plLevel"; 
+    gameLoops.status = "game"; 
 
     hf.clearRect(0,0,C.WIDTH,C.HEIGHT); //очистка области
 
@@ -27,7 +27,7 @@ module.exports = gameLoops =  {
     o.header.draw();
     o.stopWatch.draw(1,10);
     o.bFullScr.draw();
-    o.bRestart.draw();
+    o.bPause.draw();
 
     //**********************
     //****Выводим объекты*****
@@ -40,6 +40,7 @@ module.exports = gameLoops =  {
     //****Если победили*****
     //**********************
     if ( hf.isWin() ){
+      o.bgOpacity.draw();
       engin.gameEngineStart(gameLoops.win);
     };
 
@@ -60,11 +61,21 @@ module.exports = gameLoops =  {
   },
 
   win : function(){
+
     gameLoops.status = "win";
 
     for ( i in o.winPopUp ){
       if ( o.winPopUp[i].name == "win_text" ) o.winPopUp[i].txt = "Уровень "+gameLoops.currentLevel+" пройден!";
       o.winPopUp[i].draw();
+    };
+  },
+
+  pause : function(){
+
+    gameLoops.status = "pause";
+
+    for ( i in o.pausePopUp ){
+      o.pausePopUp[i].draw();
     };
   },
 
