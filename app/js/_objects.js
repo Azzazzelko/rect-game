@@ -29,24 +29,49 @@ function createMenu(txtArr, nameArr){  //создаем главное меню
   return menu;
 };
 
+function createWinPopUp(){
+
+  var winPopBG = new Rect( C.WIDTH/2-275/2, C.HEIGHT/2-125/2, 275, 125, "red" );
+  var bPopExit = new Button( winPopBG.x+5, winPopBG.y+winPopBG.h-5-40, 90, 40, "black", "Выход", "pop_exit", 20 );
+  var bPopNext = new Button( winPopBG.x+winPopBG.w-5-90, winPopBG.y+winPopBG.h-5-40, 90, 40, "black", "Далее", "pop_next", 20 );
+  var winText = new Button( C.WIDTH/2-90/2, winPopBG.y+10, 90, 40, "transparent", "Уровень N пройден!", "win_text", 25 );
+  winText.txtColor = "black";
+
+  var winPopUp = [];
+  winPopUp.push(winPopBG, bPopExit, bPopNext, winText);
+
+  return winPopUp;
+};
+
 var grd = cnvs.ctx.createLinearGradient(C.WIDTH, 0, C.WIDTH, 50+C.PDNG);
 grd.addColorStop(0, 'black');   
 grd.addColorStop(1, 'grey');
 
-
+//menu
 var menu = createMenu(["Играть","Настройки"],["play", "options"]);
 
+
+//bg 
+var matrix = createMatrix(); //bg уровня
+var bg = new Image("img/rect-bg.jpg"); //bg в главном меню
+
+
+//header
 var header = new Rect( 0, 0, C.WIDTH, 50+C.PDNG, grd );
-var bRestart = new Button( C.WIDTH-90-5, header.h/2-C.CNV_BORDER/2 - 40/2, 90, 40, "#34BACA", "Restart", "restart", 25 );
-var stopWatch = new Button( 5, header.h/2-C.CNV_BORDER/2 - 40/2, 145, 40, "#34BACA", "00:00:00:000", "stopwatch", 25 );
+var bFullScr = new Button( C.WIDTH-50-5, header.h/2-C.CNV_BORDER/2 - 40/2, 50, 40, "#34BACA", "FS", "fullScr", 25 );
+var bRestart = new Button( C.WIDTH-90-5-bFullScr.w-10, header.h/2-C.CNV_BORDER/2 - 40/2, 90, 40, "#34BACA", "Заново", "restart", 25 );
+var stopWatch = new Button( 5, header.h/2-C.CNV_BORDER/2 - 40/2, 145, 40, "#34BACA", "00 : 00 : 00", "stopwatch", 25 );
 
-var matrix = createMatrix();
 
+//win pop-up
+var winPopUp = createWinPopUp();
+
+
+//playable obj
 var pl = new Rect(C.PDNG,C.PDNG*2+50,50,50,"black");  //игрок
 var box = new Rect(C.PDNG,C.PDNG*2+50,50,50,"#3D5DFF"); //бокс
 var door = new Rect(C.PDNG,C.PDNG*2+50,50,50, "rgba(231, 23, 32, 0.8)"); //дверь
-var bg = new Image("img/rect-bg.jpg");
-var walls = [];
+var walls = []; //стены на уровне, заполняется выбранным уровнем.
 
 module.exports = {
 
@@ -55,10 +80,12 @@ module.exports = {
 	header : header,
   stopWatch : stopWatch,
 	bRestart : bRestart,
+  bFullScr : bFullScr,
 	pl : pl,
 	box : box,
 	door : door,
 	bg : bg,
-	walls : walls
+	walls : walls,
+  winPopUp : winPopUp
 
 };

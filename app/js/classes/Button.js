@@ -13,6 +13,7 @@ module.exports = Button = function(x, y, w, h, color, txt, name, fSize){
   this.txt = txt;
   this.name = name;
   this.fSize = fSize;
+  this.txtColor = "white";
 
   this.draw = function(noCenter, padd){
 
@@ -22,7 +23,7 @@ module.exports = Button = function(x, y, w, h, color, txt, name, fSize){
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, this.w, this.h);
 
-    ctx.fillStyle = "white";
+    ctx.fillStyle = this.txtColor;
     ctx.textAlign = ( !noCenter ) ? "center" : "start";
     ctx.font = this.fSize + 'px Arial';
     ctx.textBaseline="middle"; 

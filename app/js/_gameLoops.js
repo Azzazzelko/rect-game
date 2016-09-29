@@ -26,6 +26,7 @@ module.exports = gameLoops =  {
     //**********************
     o.header.draw();
     o.stopWatch.draw(1,10);
+    o.bFullScr.draw();
     o.bRestart.draw();
 
     //**********************
@@ -39,13 +40,13 @@ module.exports = gameLoops =  {
     //****Если победили*****
     //**********************
     if ( hf.isWin() ){
-      console.log("WIN!");
-      engin.gameEngineStart(gameLoops.menu);
+      engin.gameEngineStart(gameLoops.win);
     };
 
   },
 
   menu : function(){
+
     gameLoops.status = "menu";
 
     hf.clearRect(0,0,C.WIDTH,C.HEIGHT);
@@ -58,6 +59,17 @@ module.exports = gameLoops =  {
 
   },
 
-  status : ""
+  win : function(){
+    gameLoops.status = "win";
+
+    for ( i in o.winPopUp ){
+      if ( o.winPopUp[i].name == "win_text" ) o.winPopUp[i].txt = "Уровень "+gameLoops.currentLevel+" пройден!";
+      o.winPopUp[i].draw();
+    };
+  },
+
+  status : "",
+
+  currentLevel : ""
 
 };

@@ -34,9 +34,6 @@ module.exports = {
   },
 
   isWin : function(){ //победили?
-
     return o.box.x == o.door.x && o.box.y == o.door.y;
-
-  }
-
+  },
 };
