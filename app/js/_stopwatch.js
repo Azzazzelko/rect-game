@@ -27,13 +27,13 @@ function upTime(countFrom) {
 module.exports = { 
 
 	start : function() {
-		if (game.status == 'game' || gameLoops.status == "menu" || gameLoops.status == "pause") {
+		// if (game.status == 'game' || gameLoops.status == "menu" || gameLoops.status == "pause" || gameLoops.status == "levels") {
 			upTime(new Date());
 			var nowT = new Date();
 			beginTime = nowT.getTime();
-		} else {
-			this.reset();
-		};
+		// } else {
+		// 	this.reset();
+		// };
 	},
 
 	reset : function() {
@@ -41,7 +41,7 @@ module.exports = {
 		clearTimeout(upTimeTO);
 
 		o.stopWatch.txt = "00 : 00 : 00";
-		this.start();
+		// this.start();
 	},
 
 	pauseTimer : function(){

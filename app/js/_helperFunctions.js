@@ -1,6 +1,7 @@
 var canvas = require('./_canvas.js');
 var o = require('./_objects.js');
 var C = require('./_const.js');
+var levels = require('./_levels.js');
 
 var cnv = canvas.cnv;
 var ctx = canvas.ctx;

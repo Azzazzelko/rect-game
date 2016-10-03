@@ -76,8 +76,10 @@ function isCursorInButton(x,y,but){ //возвращает тру, если ку
 };
 
 function loadLevel(number){ //загрузка уровня
+  sw.start();
   levels[number](); 
   gameLoops.currentLevel = number; 
+  o.currLevel.txt = "Уровень "+number;
   engin.gameEngineStart(gameLoops.plLevel);
 };
 
@@ -98,10 +100,9 @@ window.onkeydown = function(e){ //событие нажатия клавишь
       moveRects("left");
 
   };
-
 };
 
-window.onmousedown = function(e){
+window.onmousedown = function(e){ //cобытие нажатия мышки
 
   var x = e.pageX-canvas.cnv.offsetLeft;
   var y = e.pageY-canvas.cnv.offsetTop;
@@ -109,8 +110,9 @@ window.onmousedown = function(e){
   for ( i in o.menu ){
     if( isCursorInButton(x,y,o.menu[i]) && gLoo.status == "menu" ){  
       if ( o.menu[i].name == "play" ){    //если нажата кнопка играть, запускаем уровень.
-        sw.start();
-        loadLevel(1);
+        loadLevel(gameLoops.currentLevel);
+      } else if ( o.menu[i].name == "change_level" ){   
+        engin.gameEngineStart(gameLoops.levels);
       };
     };
   };
@@ -130,7 +132,7 @@ window.onmousedown = function(e){
         engin.gameEngineStart(gameLoops.plLevel);
       } else if ( o.pausePopUp[i].name == "restart" ){
         sw.reset();
-        loadLevel(1);
+        loadLevel(gameLoops.currentLevel);
       } else if ( o.pausePopUp[i].name == "exit" ){
         sw.reset();
         engin.gameEngineStart(gameLoops.menu);
@@ -146,6 +148,37 @@ window.onmousedown = function(e){
 
   if( isCursorInButton(x,y,o.bFullScr) && gLoo.status == "game"){
     ( !fs.status ) ? fs.launchFullScreen(canvas.cnv) : fs.canselFullScreen(); 
+  };
+
+  for ( i in o.winPopUp ){
+    if( isCursorInButton(x,y,o.winPopUp[i]) && gLoo.status == "win" ){
+      if ( o.winPopUp[i].name == "pop_exit" ){
+        engin.gameEngineStart(gameLoops.menu);
+      } else if ( o.winPopUp[i].name == "pop_next" && gameLoops.currentLevel != levels.lvlsCount() ){
+        sw.reset();
+        gameLoops.currentLevel++;
+        loadLevel(gameLoops.currentLevel);
+      };
+    };
+  };
+
+  for ( i in o.levelsFooter ){
+    if( isCursorInButton(x,y,o.levelsFooter[i]) && gLoo.status == "levels" ){
+      if ( o.levelsFooter[i].name == "prev" ){
+        console.log("Кнопка назад, пока так.");
+      } else if ( o.levelsFooter[i].name == "to_menu" ){
+        engin.gameEngineStart(gameLoops.menu);
+      } else if ( o.levelsFooter[i].name == "next" ){
+        console.log("Кнопка вперед, пока так.");
+      }; 
+    };
+  };
+
+  for ( var i = 0; i < o.bLevelsButtons.length; i++ ){
+    if( isCursorInButton(x,y,o.bLevelsButtons[i]) && gLoo.status == "levels" ){
+        gameLoops.currentLevel = i+1;
+        loadLevel(i+1);
+    };
   };
 
 };

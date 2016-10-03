@@ -28,6 +28,7 @@ module.exports = gameLoops =  {
     o.stopWatch.draw(1,10);
     o.bFullScr.draw();
     o.bPause.draw();
+    o.currLevel.draw();
 
     //**********************
     //****Выводим объекты*****
@@ -66,7 +67,11 @@ module.exports = gameLoops =  {
 
     for ( i in o.winPopUp ){
       if ( o.winPopUp[i].name == "win_text" ) o.winPopUp[i].txt = "Уровень "+gameLoops.currentLevel+" пройден!";
-      o.winPopUp[i].draw();
+      if ( o.winPopUp[i].name == "pop_next" && gameLoops.currentLevel == levels.lvlsCount() ) {
+        continue;
+      } else {
+        o.winPopUp[i].draw();
+      }  
     };
   },
 
@@ -79,8 +84,26 @@ module.exports = gameLoops =  {
     };
   },
 
+  levels : function(){
+
+    gameLoops.status = "levels";
+
+    hf.clearRect(0,0,C.WIDTH,C.HEIGHT);
+
+    o.levelsHeader.draw();
+
+    for ( i in o.bLevelsButtons ){
+      o.bLevelsButtons[i].draw();
+    };
+
+    for ( i in o.levelsFooter ){
+      o.levelsFooter[i].draw();
+    };
+
+  },
+
   status : "",
 
-  currentLevel : ""
+  currentLevel : "1"
 
 };
