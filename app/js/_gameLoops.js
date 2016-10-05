@@ -2,14 +2,31 @@ var C = require('./_const.js');
 var o = require('./_objects.js');
 var hf = require('./_helperFunctions.js');
 var engin = require('./_engine.js');
+var res = require('./_resourses.js');
+
+//VREMENNO!!!
+var ctx = require('./_canvas.js').ctx;
 
 module.exports = gameLoops =  {
 
-  plLevel : function(){
+  loader : function(){
+
+    gameLoops.status = "loader";
+
+    o.TEST.draw();
+    if ( res.resourses.areLoaded() ) engin.gameEngineStart(gameLoops.menu);
+  },
+
+  game : function(){
 
     gameLoops.status = "game"; 
 
     hf.clearRect(0,0,C.WIDTH,C.HEIGHT); //очистка области
+
+    //ВРЕМЕННО!!!
+    ctx.fillStyle = "black";
+    ctx.fillRect(0,0,C.WIDTH,C.HEIGHT);
+
 
     //выводим матричное поле игры
     for ( i in o.matrix ){
@@ -44,7 +61,6 @@ module.exports = gameLoops =  {
       o.bgOpacity.draw();
       engin.gameEngineStart(gameLoops.win);
     };
-
   },
 
   menu : function(){
@@ -53,12 +69,13 @@ module.exports = gameLoops =  {
 
     hf.clearRect(0,0,C.WIDTH,C.HEIGHT);
 
-    o.bg.drawImg();
+    o.animateBg.draw();
+
+    o.logo.draw();
 
     for ( i in o.menu ){
       o.menu[i].draw();
     };
-
   },
 
   win : function(){
@@ -99,7 +116,6 @@ module.exports = gameLoops =  {
     for ( i in o.levelsFooter ){
       o.levelsFooter[i].draw();
     };
-
   },
 
   status : "",

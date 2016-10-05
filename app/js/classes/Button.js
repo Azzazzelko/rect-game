@@ -3,7 +3,7 @@ var canvas = require('./../_canvas.js');
 var cnv = canvas.cnv;
 var ctx = canvas.ctx;
 
-module.exports = Button = function(x, y, w, h, color, txt, name, fSize){
+module.exports = Button = function(x, y, w, h, color, txt, name, fSize, fontFam){
   
   this.x = x;
   this.y = y;
@@ -14,6 +14,7 @@ module.exports = Button = function(x, y, w, h, color, txt, name, fSize){
   this.name = name;
   this.fSize = fSize;
   this.txtColor = "white";
+  this.fontFam = fontFam || "Arial";
 
   this.draw = function(noCenter, padd){
 
@@ -25,7 +26,7 @@ module.exports = Button = function(x, y, w, h, color, txt, name, fSize){
 
     ctx.fillStyle = this.txtColor;
     ctx.textAlign = ( !noCenter ) ? "center" : "start";
-    ctx.font = this.fSize + 'px Arial';
+    ctx.font = this.fSize + 'px '+this.fontFam;
     ctx.textBaseline="middle"; 
     ctx.fillText(this.txt, _x, this.y+this.h/2);
   };

@@ -10,6 +10,23 @@ var C = require('./_const.js');
 
 var gameLoops = gLoo;
 
+var isBorder = { //принимает объект, возвращает стоит ли с запрашиваеомй границы канвы
+    up : function(obj){
+      return obj.y == 0;
+    },
+
+    down : function(obj){
+      return obj.y == C.HEIGHT - obj.h - C.PDNG - C.HEADER_H - C.PDNG;
+    },
+
+    left : function(obj){
+      return obj.x == 0;
+    },
+
+    right : function(obj){
+      return obj.x == C.WIDTH - obj.w - C.PDNG - C.PDNG
+    }
+};
 
 var isNear = { //принимает 2 объекта, возвращает стоит ли с запрашиваемой стороны 1ый от 2го.
 
@@ -60,10 +77,10 @@ var isNear = { //принимает 2 объекта, возвращает ст�
 
 function moveRects(direction){  //(описываем границы движения) разрешает движение в пределах уровня
 
-  if ( isNear[direction](o.pl, o.box) && !hf.isBorder[direction](o.box) && !isNear[direction](o.box, o.walls) ){ //если рядом с ящиком и ящик не у границ, двигаем.
+  if ( isNear[direction](o.pl, o.box) && !isBorder[direction](o.box) && !isNear[direction](o.box, o.walls) ){ //если рядом с ящиком и ящик не у границ, двигаем.
     o.pl.move(direction);
     o.box.move(direction);
-  } else if( !isNear[direction](o.pl, o.box) && !hf.isBorder[direction](o.pl) && !isNear[direction](o.pl, o.walls) ){ //если не рядом с ящиком и не рядом с границей, двигаемся.
+  } else if( !isNear[direction](o.pl, o.box) && !isBorder[direction](o.pl) && !isNear[direction](o.pl, o.walls) ){ //если не рядом с ящиком и не рядом с границей, двигаемся.
     o.pl.move(direction);
   }
 };
@@ -80,7 +97,7 @@ function loadLevel(number){ //загрузка уровня
   levels[number](); 
   gameLoops.currentLevel = number; 
   o.currLevel.txt = "Уровень "+number;
-  engin.gameEngineStart(gameLoops.plLevel);
+  engin.gameEngineStart(gameLoops.game);
 };
 
 window.onkeydown = function(e){ //событие нажатия клавишь
@@ -129,7 +146,7 @@ window.onmousedown = function(e){ //cобытие нажатия мышки
     if( isCursorInButton(x,y,o.pausePopUp[i]) && gLoo.status == "pause" ){
       if ( o.pausePopUp[i].name == "return" ){
         sw.start();
-        engin.gameEngineStart(gameLoops.plLevel);
+        engin.gameEngineStart(gameLoops.game);
       } else if ( o.pausePopUp[i].name == "restart" ){
         sw.reset();
         loadLevel(gameLoops.currentLevel);

@@ -16,24 +16,6 @@ module.exports = {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   },
 
-  isBorder : { //принимает объект, возвращает стоит ли с запрашиваеомй границы канвы
-    up : function(obj){
-      return obj.y == C.PDNG + obj.h + C.PDNG;
-    },
-
-    down : function(obj){
-      return obj.y == C.HEIGHT - obj.h - C.PDNG;
-    },
-
-    left : function(obj){
-      return obj.x == C.PDNG;
-    },
-
-    right : function(obj){
-      return obj.x == C.WIDTH - obj.w - C.PDNG
-    }
-  },
-
   isWin : function(){ //победили?
     return o.box.x == o.door.x && o.box.y == o.door.y;
   }

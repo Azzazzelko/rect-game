@@ -1,11 +1,12 @@
 var C = require('./_const.js');
 var o = require('./_objects.js');
+var res = require('./_resourses.js');
 
 module.exports = levels = {
 
 	lvlsCount : function(){
 		var count = 0;
-		for (key in levels){ count++ };
+		for(key in levels){ count++ };
 			return count-1;
 	},
 
@@ -13,16 +14,17 @@ module.exports = levels = {
 
 		var _walls = [];  //массив с будущепостроенными стенками
 		var arr = [       
-		[2,3],[2,4],[2,5],[3,0],[3,6],[3,8],[4,2],[5,1],[5,3],[5,7],[6,4],[7,4],[7,6],[8,1],[8,8],[9,0],[9,4],[9,5]
+		[1,3],[1,4],[1,5],[2,0],[2,6],[2,8],[3,2],[4,1],[4,3],[4,7],[5,4],[6,4],[6,6],[7,1],[7,8],[8,0],[8,4],[8,5]
 		];				  //придуманный массив со стенками
 
 		for (var i = 0; i < arr.length; i++){ 
-			_walls.push( new Rect(C.PDNG+arr[i][1]*(50+C.PDNG), C.PDNG+arr[i][0]*(50+C.PDNG), 50, 50, "#622DA1") );
+			// _walls.push( new Rect(arr[i][1]*(50+C.PDNG), arr[i][0]*(50+C.PDNG), 50, 50, "#622DA1") );
+			_walls.push( new Wall( res.arrImages[5], arr[i][1]*(50+C.PDNG), arr[i][0]*(50+C.PDNG), 50, 50) );
 		};				  //заполняем массив walls
 
-		o.box.setPosition( C.PDNG+2*(50+C.PDNG), C.PDNG+8*(50+C.PDNG) );
-		o.pl.setPosition( C.PDNG, C.PDNG*2+50 );
-		o.door.setPosition( C.PDNG+8*(50+C.PDNG), C.PDNG+1*(50+C.PDNG) );
+		o.pl.setPosition( 0, 0 );
+		o.box.setPosition( 0+2*(50+C.PDNG), 7*(50+C.PDNG) );
+		o.door.setPosition( 0+8*(50+C.PDNG), 0*(50+C.PDNG) );
 
 		o.walls = _walls;
 
@@ -32,16 +34,16 @@ module.exports = levels = {
 
 		var _walls = [];  
 		var arr = [       
-		[1,0],[1,4],[1,6],[3,2],[3,4],[4,8],[4,0],[1,3],[4,7],[5,2],[5,4],[5,5],[5,6],[6,0],[7,2],[7,5],[7,6],[7,7],[8,0],[9,3],[9,4],[9,7]
+		[0,0],[0,4],[0,3],[0,6],[2,2],[2,4],[3,8],[3,0],[3,7],[4,2],[4,4],[4,5],[4,6],[5,0],[6,2],[6,5],[6,6],[6,7],[7,0],[8,3],[8,4],[8,7]
 		];				  
 
 		for (var i = 0; i < arr.length; i++){ 
-			_walls.push( new Rect(C.PDNG+arr[i][1]*(50+C.PDNG), C.PDNG+arr[i][0]*(50+C.PDNG), 50, 50, "#622DA1") );
+			_walls.push( new Rect(arr[i][1]*(50+C.PDNG), arr[i][0]*(50+C.PDNG), 50, 50, "#622DA1") );
 		};				  
 
-		o.box.setPosition( C.PDNG+6*(50+C.PDNG), C.PDNG+8*(50+C.PDNG) );
-		o.pl.setPosition( C.PDNG, C.PDNG+9*(50+C.PDNG) );
-		o.door.setPosition( C.PDNG+8*(50+C.PDNG), C.PDNG+7*(50+C.PDNG) );
+		o.pl.setPosition( 0, 0+8*(50+C.PDNG) );
+		o.box.setPosition( 0+6*(50+C.PDNG), 0+7*(50+C.PDNG) );
+		o.door.setPosition( 0+8*(50+C.PDNG), 0+6*(50+C.PDNG) );
 
 		o.walls = _walls;
 
@@ -51,16 +53,16 @@ module.exports = levels = {
 
 		var _walls = [];  
 		var arr = [       
-		[1,2],[1,7],[2,5],[2,8],[3,2],[3,7],[4,4],[5,1],[5,4],[5,6],[7,2],[7,3],[7,4],[7,6],[7,8],[8,0],[8,5],[9,0],[9,1],[9,3],[9,7]
+		[0,2],[0,7],[1,5],[1,8],[2,2],[2,7],[3,4],[4,1],[4,4],[4,6],[6,2],[6,3],[6,4],[6,6],[6,8],[7,0],[7,5],[8,0],[8,1],[8,3],[8,7]
 		];				  
 
 		for (var i = 0; i < arr.length; i++){ 
-			_walls.push( new Rect(C.PDNG+arr[i][1]*(50+C.PDNG), C.PDNG+arr[i][0]*(50+C.PDNG), 50, 50, "#622DA1") );
+			_walls.push( new Rect(arr[i][1]*(50+C.PDNG), +arr[i][0]*(50+C.PDNG), 50, 50, "#622DA1") );
 		};				  
 
-		o.box.setPosition( C.PDNG+1*(50+C.PDNG), C.PDNG+7*(50+C.PDNG) );
-		o.pl.setPosition( C.PDNG+8*(50+C.PDNG), C.PDNG+9*(50+C.PDNG) );
-		o.door.setPosition( C.PDNG+2*(50+C.PDNG), C.PDNG+4*(50+C.PDNG) );
+		o.pl.setPosition( 0+8*(50+C.PDNG), 0+8*(50+C.PDNG) );
+		o.box.setPosition( 0+1*(50+C.PDNG), 0+6*(50+C.PDNG) );
+		o.door.setPosition( 0+2*(50+C.PDNG), 0+3*(50+C.PDNG) );
 
 		o.walls = _walls;
 
@@ -70,16 +72,16 @@ module.exports = levels = {
 
 		var _walls = [];  
 		var arr = [       
-		[1,1],[2,5],[2,7],[3,4],[4,1],[4,3],[4,6],[4,8],[5,3],[6,5],[6,7],[7,0],[7,2],[7,3],[7,5],[8,8],[9,0],[9,8]
+		[0,1],[1,5],[1,7],[2,4],[3,1],[3,3],[3,6],[3,8],[4,3],[5,5],[5,7],[6,0],[6,2],[6,3],[6,5],[7,8],[8,0],[8,8]
 		];				  
 
 		for (var i = 0; i < arr.length; i++){ 
-			_walls.push( new Rect(C.PDNG+arr[i][1]*(50+C.PDNG), C.PDNG+arr[i][0]*(50+C.PDNG), 50, 50, "#622DA1") );
+			_walls.push( new Rect(arr[i][1]*(50+C.PDNG), arr[i][0]*(50+C.PDNG), 50, 50, "#622DA1") );
 		};				  
 
-		o.box.setPosition( C.PDNG+7*(50+C.PDNG), C.PDNG+8*(50+C.PDNG) );
-		o.pl.setPosition( C.PDNG+7*(50+C.PDNG), C.PDNG+9*(50+C.PDNG) );
-		o.door.setPosition( C.PDNG+6*(50+C.PDNG), C.PDNG+1*(50+C.PDNG) );
+		o.pl.setPosition( 0+7*(50+C.PDNG), 0+8*(50+C.PDNG) );
+		o.box.setPosition( 0+7*(50+C.PDNG), 0+7*(50+C.PDNG) );
+		o.door.setPosition( 0+6*(50+C.PDNG), 0+0*(50+C.PDNG) );
 
 		o.walls = _walls;
 
@@ -89,16 +91,16 @@ module.exports = levels = {
 
 		var _walls = [];  
 		var arr = [       
-		[1,1],[1,3],[1,5],[1,8],[3,2],[3,4],[3,6],[3,8],[5,0],[5,3],[5,5],[5,7],[7,1],[7,2],[7,4],[7,7],[8,8],[9,2],[9,4],[9,8]
+		[0,1],[0,3],[0,5],[0,8],[2,2],[2,4],[2,6],[2,8],[4,0],[4,3],[4,5],[4,7],[6,1],[6,2],[6,4],[6,7],[7,8],[8,2],[8,4],[8,8]
 		];				  
 
 		for (var i = 0; i < arr.length; i++){ 
-			_walls.push( new Rect(C.PDNG+arr[i][1]*(50+C.PDNG), C.PDNG+arr[i][0]*(50+C.PDNG), 50, 50, "#622DA1") );
+			_walls.push( new Rect(arr[i][1]*(50+C.PDNG), arr[i][0]*(50+C.PDNG), 50, 50, "#622DA1") );
 		};				  
 
-		o.box.setPosition( C.PDNG+1*(50+C.PDNG), C.PDNG+2*(50+C.PDNG) );
-		o.pl.setPosition( C.PDNG, C.PDNG+1*(50+C.PDNG) );
-		o.door.setPosition( C.PDNG, C.PDNG+9*(50+C.PDNG) );
+		o.pl.setPosition( 0, 0+0*(50+C.PDNG) );
+		o.box.setPosition( 0+1*(50+C.PDNG), 0+1*(50+C.PDNG) );
+		o.door.setPosition( 0, 0+8*(50+C.PDNG) );
 
 		o.walls = _walls;
 

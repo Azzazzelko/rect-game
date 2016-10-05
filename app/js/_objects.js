@@ -1,31 +1,31 @@
 var C = require('./_const.js');
 var cnvs = require('./_canvas.js');
-
+var res = require('./_resourses.js');
 
 function createMatrixBG(){
   var matrix = []; //массив для матричного вида уровня
 
-  for (var i = 0; i < 10; i++){ //заполняем объект
+  for (var i = 0; i < 9; i++){ //заполняем объект
     for (var j = 0; j < 9; j++){
-      matrix.push( new Rect(C.PDNG+j*(50+C.PDNG), C.PDNG+i*(50+C.PDNG), 50, 50, "#FEA3A3") );
+      matrix.push( new Rect(j*(50+C.PDNG), i*(50+C.PDNG), 50, 50, "#FEA3A3") );
     }
   };
 
   return matrix
 };
 
-function createMenu(txtArr, nameArr, fontsize){  //создаем главное меню
+function createMenu(txtArr, nameArr){  //создаем главное меню
   var menu = [];
   var names = nameArr;
   var txt = txtArr;
-  var _fontsize = fontsize;
   var amounts = txtArr.length;
   
-  var _height = (C.HEIGHT/2) - (75*amounts/2); 
-  var _width = C.WIDTH/2-230/2;
+  var _fontsize = "28";
+  var _x = C.WIDTH/2-300/2;
+  var _y = (C.HEIGHT/2) - (85*amounts/2) + 85; 
 
   for (var i = 0; i < amounts; i++){
-    menu.push( new Button( _width, _height+i*75, 230, 50, "black", txt[i], names[i], _fontsize ) );
+    menu.push( new ImgButton( res.arrImages[0], _x, _y+i*85, 300, 60, txt[i], names[i], _fontsize, 135 ) );
   };
 
   return menu;
@@ -99,32 +99,27 @@ function createLevelsFooter(){
   return levelsFooter;
 };
 
-var grd = cnvs.ctx.createLinearGradient(C.WIDTH, 0, C.WIDTH, 50+C.PDNG);
-grd.addColorStop(0, 'black');   
-grd.addColorStop(1, 'grey');
-
-
 
 //menu
-var menu = createMenu(["Играть", "Выбор уровня", "Настройки"],["play", "change_level", "options"], "30");
+var logo = new ImgButton( res.arrImages[1], C.WIDTH/2-450/2, 20, 450, 150, "", "logo", 0 );
+var menu = createMenu(["Играть", "Уровни", "Настройки"],["play", "change_level", "options"]);
 
 
 //background 
 var matrix = createMatrixBG(); //bg уровня
-var bg = new Image("img/rect-bg.jpg"); //bg в главном меню
 var bgOpacity = new Rect(0, 0, C.WIDTH, C.HEIGHT, "rgba(0, 0, 0, 0.5)");
 
 
 //game header
-var header = new Rect( 0, 0, C.WIDTH, 50+C.PDNG, grd );
-var bFullScr = new Button( C.WIDTH-50-5, header.h/2-C.CNV_BORDER/2 - 40/2, 50, 40, "#34BACA", "FS", "fullScr", 25 );
-var stopWatch = new Button( 5, header.h/2-C.CNV_BORDER/2 - 40/2, 145, 40, "#34BACA", "00 : 00 : 00", "stopwatch", 25 );
-var bPause = new Button( C.WIDTH-90-5-bFullScr.w-8, header.h/2-C.CNV_BORDER/2 - 40/2, 90, 40, "#34BACA", "Пауза", "pause", 25 );
-var currLevel = new Button( (stopWatch.x+stopWatch.w+bPause.x)/2-140/2, header.h/2-C.CNV_BORDER/2 - 40/2, 140, 40, "#34BACA", "Уровень", "curr_level", 25 );
+var header = new ImgButton( res.arrImages[2], 0, 0, C.WIDTH, 70+C.PDNG, "", "header", 0 );
+var bFullScr = new ImgButton( res.arrImages[3], C.WIDTH-45-20, header.h/2-C.CNV_BORDER/2 - 45/2, 45, 45, "", "fullScr", 0 );
+var stopWatch = new Button( 10, header.h/2-C.CNV_BORDER/2 - 40/2, 120, 40, "transparent", "00 : 00 : 00", "stopwatch", 25, "dited" );
+var bPause = new ImgButton( res.arrImages[4], C.WIDTH-45-7-bFullScr.w-20, header.h/2-C.CNV_BORDER/2 - 45/2, 45, 45, "", "pause", 0 );
+var currLevel = new Button( (stopWatch.x+stopWatch.w+bPause.x)/2-140/2, header.h/2-C.CNV_BORDER/2 - 40/2, 140, 40, "transparent", "Уровень", "curr_level", 25, "capture_it" );
 
 
 //change level
-var levelsHeader = new Button( 0, 0, C.WIDTH, 50+C.PDNG, grd, "Выбор уровня", "levels_header", 25 );
+var levelsHeader = new Button( 0, 0, C.WIDTH, 50+C.PDNG, "black", "Выбор уровня", "levels_header", 27 );
 var bLevelsButtons = createLevelsButtons(5);
 var levelsFooter = createLevelsFooter();
 
@@ -138,24 +133,27 @@ var pausePopUp = createPausePopUp(["Вернуться", "Заново", "Вых
 
 
 //playable obj
-var pl = new Rect(C.PDNG,C.PDNG*2+50,50,50,"black");  //игрок
-var box = new Rect(C.PDNG,C.PDNG*2+50,50,50,"#3D5DFF"); //бокс
-var door = new Rect(C.PDNG,C.PDNG*2+50,50,50, "rgba(231, 23, 32, 0.8)"); //дверь
+var pl = new Rect(0,0,50,50,"black");  //игрок
+var box = new Playable(res.arrImages[6],0,0,50,50); //бокс
+var door = new Rect(0,0,50,50, "rgba(231, 23, 32, 0.8)"); //дверь
 var walls = []; //стены на уровне, заполняется выбранным уровнем.
 
 
-module.exports = {
+var animateBg = new Video(0, 0, C.WIDTH, C.HEIGHT, res.arrVideos[0]);
 
-	matrix : matrix,
-	menu : menu,
-	header : header,
+
+module.exports = objects = {
+
+  matrix : matrix,
+  logo : logo,
+  menu : menu,
+  header : header,
   stopWatch : stopWatch,
   bPause : bPause,
   bFullScr : bFullScr,
   pl : pl,
   box : box,
   door : door,
-  bg : bg,
   walls : walls,
   winPopUp : winPopUp,
   pausePopUp : pausePopUp,
@@ -163,7 +161,8 @@ module.exports = {
   currLevel : currLevel,
   levelsHeader : levelsHeader,
   bLevelsButtons : bLevelsButtons,
-  levelsFooter : levelsFooter
-
+  levelsFooter : levelsFooter,
+  TEST : new Rect(0,0,C.WIDTH,C.HEIGHT,"black"),
+  animateBg : animateBg
+  
 };
-
