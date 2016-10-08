@@ -65,7 +65,10 @@ var arrImages = loadImages([
   "../img/fullscreen.svg",
   "../img/pause.svg",
   "../img/wall.svg",
-  "../img/crystall-01.svg"
+  "../img/crystall-01.svg",
+  "../img/portal.svg",
+  "../img/ground.jpg",
+  '../img/player.png'
 ]);
 
 module.exports = { 
@@ -77,3 +80,5 @@ module.exports = {
   arrImages : arrImages  
 
 };
+
+

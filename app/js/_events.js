@@ -7,25 +7,26 @@ var hf = require('./_helperFunctions.js');
 var canvas = require('./_canvas.js');
 var fs = require('./_fullScreen.js');
 var C = require('./_const.js');
+var key = require('./_key.js');
 
 var gameLoops = gLoo;
 
 var isBorder = { //принимает объект, возвращает стоит ли с запрашиваеомй границы канвы
-    up : function(obj){
-      return obj.y == 0;
-    },
+  up : function(obj){
+    return obj.y == 0;
+  },
 
-    down : function(obj){
-      return obj.y == C.HEIGHT - obj.h - C.PDNG - C.HEADER_H - C.PDNG;
-    },
+  down : function(obj){
+    return obj.y == C.HEIGHT - obj.h - C.PDNG - C.HEADER_H - C.PDNG;
+  },
 
-    left : function(obj){
-      return obj.x == 0;
-    },
+  left : function(obj){
+    return obj.x == 0;
+  },
 
-    right : function(obj){
-      return obj.x == C.WIDTH - obj.w - C.PDNG - C.PDNG
-    }
+  right : function(obj){
+    return obj.x == C.WIDTH - obj.w - C.PDNG - C.PDNG
+  }
 };
 
 var isNear = { //принимает 2 объекта, возвращает стоит ли с запрашиваемой стороны 1ый от 2го.
@@ -75,8 +76,25 @@ var isNear = { //принимает 2 объекта, возвращает ст�
   }
 };
 
-function moveRects(direction){  //(описываем границы движения) разрешает движение в пределах уровня
+function directionIs(direction){  //возвращает угол поворота в градусах
 
+  switch(direction){
+
+    case "up"   : return 360;
+    break;
+    case "down" : return 180;
+    break;
+    case "left" : return 270;
+    break;
+    case "right": return 90;
+    break;
+
+  };
+};
+
+function canMoveObj(direction){  //(описываем границы движения) разрешает движение в пределах уровня
+
+  o.pl.direction = o.pl.isMove = directionIs(direction);
   if ( isNear[direction](o.pl, o.box) && !isBorder[direction](o.box) && !isNear[direction](o.box, o.walls) ){ //если рядом с ящиком и ящик не у границ, двигаем.
     o.pl.move(direction);
     o.box.move(direction);
@@ -104,18 +122,22 @@ window.onkeydown = function(e){ //событие нажатия клавишь
 
   if ( gLoo.status == "game" ){ //передвигаться только если идет игра.
 
-    if ( e.key == "d" || e.key == "ArrowRight" )  
-      moveRects("right");
+    if ( key.isKeyDown("D") )
+      canMoveObj("right");
 
-    if ( e.key == "s" || e.key == "ArrowDown" )  
-      moveRects("down");
+    if ( key.isKeyDown("S") )
+      canMoveObj("down");
 
-    if ( e.key == "w" || e.key == "ArrowUp" )
-      moveRects("up");
+    if ( key.isKeyDown("W") )
+      canMoveObj("up");
 
-    if ( e.key == "a" || e.key == "ArrowLeft" )
-      moveRects("left");
+    if ( key.isKeyDown("A") )
+      canMoveObj("left");
 
+  };
+
+  window.onkeyup = function(e){
+    o.pl.isMove = false;
   };
 };
 
@@ -124,78 +146,110 @@ window.onmousedown = function(e){ //cобытие нажатия мышки
   var x = e.pageX-canvas.cnv.offsetLeft;
   var y = e.pageY-canvas.cnv.offsetTop;
 
-  for ( i in o.menu ){
-    if( isCursorInButton(x,y,o.menu[i]) && gLoo.status == "menu" ){  
-      if ( o.menu[i].name == "play" ){    //если нажата кнопка играть, запускаем уровень.
-        loadLevel(gameLoops.currentLevel);
-      } else if ( o.menu[i].name == "change_level" ){   
-        engin.gameEngineStart(gameLoops.levels);
+  switch (gLoo.status){
+
+    case "menu" :
+      for ( i in o.menu ){
+        if ( isCursorInButton(x,y,o.menu[i]) ){
+          switch (o.menu[i].name) {
+
+            case "play" :
+            loadLevel(gameLoops.currentLevel);
+            break;
+
+            case "change_level" :
+            engin.gameEngineStart(gameLoops.levels);
+            break;
+
+          };
+        };
       };
-    };
-  };
+      break;
 
-  for ( i in o.winPopUp ){
-    if( isCursorInButton(x,y,o.winPopUp[i]) && gLoo.status == "win" ){
-      if ( o.winPopUp[i].name == "pop_exit" ){
-        engin.gameEngineStart(gameLoops.menu);
+    case "levels" :
+      for ( i in o.levelsFooter ){
+        if ( isCursorInButton(x,y,o.levelsFooter[i]) ){
+          switch (o.levelsFooter[i].name) {
+
+            case "prev" :
+            console.log("Кнопка назад, пока так.");
+            break;
+
+            case "to_menu" :
+            engin.gameEngineStart(gameLoops.menu);
+            break;
+
+            case "next" :
+            console.log("Кнопка вперед, пока так.");
+            break;
+
+          };
+        };
       };
-    };
-  };
 
-  for ( i in o.pausePopUp ){
-    if( isCursorInButton(x,y,o.pausePopUp[i]) && gLoo.status == "pause" ){
-      if ( o.pausePopUp[i].name == "return" ){
-        sw.start();
-        engin.gameEngineStart(gameLoops.game);
-      } else if ( o.pausePopUp[i].name == "restart" ){
-        sw.reset();
-        loadLevel(gameLoops.currentLevel);
-      } else if ( o.pausePopUp[i].name == "exit" ){
-        sw.reset();
-        engin.gameEngineStart(gameLoops.menu);
+      for ( var i = 0; i < o.bLevelsButtons.length; i++ ){
+        if ( isCursorInButton(x,y,o.bLevelsButtons[i]) ){
+          gameLoops.currentLevel = i+1;
+          loadLevel(i+1);
+        };
       };
-    };
-  };
-  
-  if( isCursorInButton(x,y,o.bPause) && gLoo.status == "game" ){
-    sw.pauseTimer();
-    o.bgOpacity.draw();
-    engin.gameEngineStart(gameLoops.pause);
-  };
+      break;
 
-  if( isCursorInButton(x,y,o.bFullScr) && gLoo.status == "game"){
-    ( !fs.status ) ? fs.launchFullScreen(canvas.cnv) : fs.canselFullScreen(); 
-  };
-
-  for ( i in o.winPopUp ){
-    if( isCursorInButton(x,y,o.winPopUp[i]) && gLoo.status == "win" ){
-      if ( o.winPopUp[i].name == "pop_exit" ){
-        engin.gameEngineStart(gameLoops.menu);
-      } else if ( o.winPopUp[i].name == "pop_next" && gameLoops.currentLevel != levels.lvlsCount() ){
-        sw.reset();
-        gameLoops.currentLevel++;
-        loadLevel(gameLoops.currentLevel);
+    case "game" :
+      if ( isCursorInButton(x,y,o.bPause) ){
+        sw.pauseTimer();
+        o.bgOpacity.draw();
+        engin.gameEngineStart(gameLoops.pause);
       };
-    };
-  };
 
-  for ( i in o.levelsFooter ){
-    if( isCursorInButton(x,y,o.levelsFooter[i]) && gLoo.status == "levels" ){
-      if ( o.levelsFooter[i].name == "prev" ){
-        console.log("Кнопка назад, пока так.");
-      } else if ( o.levelsFooter[i].name == "to_menu" ){
-        engin.gameEngineStart(gameLoops.menu);
-      } else if ( o.levelsFooter[i].name == "next" ){
-        console.log("Кнопка вперед, пока так.");
-      }; 
-    };
-  };
+      if ( isCursorInButton(x,y,o.bFullScr) ){
+        // console.log(C.HEIGHT);
+        // canvas.cnv.width = canvas.cnv.width*2;
+        // canvas.cnv.height = canvas.cnv.height*2;
+        // canvas.ctx.scale(2,2);
+        ( !fs.status ) ? fs.launchFullScreen(canvas.cnv) : fs.canselFullScreen(); 
+      };
+      break;
 
-  for ( var i = 0; i < o.bLevelsButtons.length; i++ ){
-    if( isCursorInButton(x,y,o.bLevelsButtons[i]) && gLoo.status == "levels" ){
-        gameLoops.currentLevel = i+1;
-        loadLevel(i+1);
-    };
-  };
+    case "win" :
 
+      for ( i in o.winPopUp ){
+        if ( isCursorInButton(x,y,o.winPopUp[i]) ){
+          if ( o.winPopUp[i].name == "pop_exit" ){
+            engin.gameEngineStart(gameLoops.menu);
+          } else if ( o.winPopUp[i].name == "pop_next" && gameLoops.currentLevel != levels.lvlsCount() ){
+            sw.reset();
+            gameLoops.currentLevel++;
+            loadLevel(gameLoops.currentLevel);
+          };
+        };
+      };
+      break;
+
+    case "pause" :
+      for ( i in o.pausePopUp ){
+        if ( isCursorInButton(x,y,o.pausePopUp[i]) ){
+          switch (o.pausePopUp[i].name) {
+
+            case "return" :
+              sw.start();
+              engin.gameEngineStart(gameLoops.game);
+              break;
+
+            case "restart" :
+              sw.reset();
+              loadLevel(gameLoops.currentLevel);
+              break;
+
+            case "exit" :
+              sw.reset();
+              engin.gameEngineStart(gameLoops.menu);
+              break;
+
+          };
+        };
+      };
+      break;
+
+  };
 };

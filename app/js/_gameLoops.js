@@ -15,6 +15,7 @@ module.exports = gameLoops =  {
 
     o.TEST.draw();
     if ( res.resourses.areLoaded() ) engin.gameEngineStart(gameLoops.menu);
+
   },
 
   game : function(){
@@ -27,12 +28,11 @@ module.exports = gameLoops =  {
     ctx.fillStyle = "black";
     ctx.fillRect(0,0,C.WIDTH,C.HEIGHT);
 
-
+    o.bgLevel.draw();
     //выводим матричное поле игры
     for ( i in o.matrix ){
       o.matrix[i].draw();
     };
-
     //выводим стены\преграды
     for ( i in o.walls ){
       o.walls[i].draw();
@@ -50,9 +50,9 @@ module.exports = gameLoops =  {
     //**********************
     //****Выводим объекты*****
     //**********************
+    o.door.draw();
     o.pl.draw();
     o.box.draw();
-    o.door.draw();
 
     //**********************
     //****Если победили*****

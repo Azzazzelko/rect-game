@@ -3,25 +3,21 @@ var canvas = require('./../_canvas.js');
 var cnv = canvas.cnv;
 var ctx = canvas.ctx;
 
-module.exports = Image = function(src){
-  this.src = src;
-  this.loaded = false;
+module.exports = Image = function(img, x, y, w, h, opacity){
 
-  var img = document.createElement('img');
+  this.x = x;
+  this.y = y;
+  this.w = w;
+  this.h = h;
+  this.img = img;
+  this.opacity = opacity || 1;
 
-  img.onload = function(){
-    this.loaded = true;
-  }.bind(this);
-
-  img.src = src;
-
-  this.dom = img;
-
-  this.drawImg = function(){
-
-    if ( !this.loaded ) return;
-
-    ctx.drawImage(this.dom,0,0);
-
+  this.draw = function(){
+    ctx.save();
+    ctx.globalAlpha = this.opacity;
+    ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
+    ctx.restore();
   };
+
+
 };

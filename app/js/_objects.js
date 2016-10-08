@@ -2,12 +2,13 @@ var C = require('./_const.js');
 var cnvs = require('./_canvas.js');
 var res = require('./_resourses.js');
 
+
 function createMatrixBG(){
   var matrix = []; //массив для матричного вида уровня
 
   for (var i = 0; i < 9; i++){ //заполняем объект
     for (var j = 0; j < 9; j++){
-      matrix.push( new Rect(j*(50+C.PDNG), i*(50+C.PDNG), 50, 50, "#FEA3A3") );
+      matrix.push( new Rect(j*(50+C.PDNG), i*(50+C.PDNG), 50, 50, "rgba(0,0,0,0.5)", true) );
     }
   };
 
@@ -100,6 +101,89 @@ function createLevelsFooter(){
 };
 
 
+
+
+function createPlayer(){
+
+  var player = new Playable(res.arrImages[9],0,0,50,50);
+  player.direction = false;
+  player.isMove = false;
+
+  player.draw = function(){
+
+    if(this.isMove){
+      this.drawAnimation(3, 2, this.direction);
+    }else{
+      this.drawFrame();
+    };
+  };
+
+  player.drawAnimation = function(frames, delay, angle){
+
+    this.img.canDraw = ( this.img.canDraw === undefined ) ? 1 : this.img.canDraw;
+
+    if (angle){
+      var _dx = this.x+C.PDNG + this.w / 2;
+      var _dy = this.y+71+C.PDNG + this.h / 2;
+      angle = angle * (Math.PI/180);
+      cnvs.ctx.save();
+      cnvs.ctx.translate(_dx,_dy);
+      cnvs.ctx.rotate(angle);
+      cnvs.ctx.translate(-_dx,-_dy);
+    };
+
+    if (this.img.canDraw == 1){
+      if (this.img.count == frames) this.img.count = 1;
+
+      this.img.canDraw = 0;
+      this.img.count = this.img.count + 1 || 1;
+
+      setTimeout(function(){
+        player.img.canDraw = 1;
+      }, 1000/(delay*2) );
+    };
+
+      cnvs.ctx.translate(C.PDNG, 71+C.PDNG);
+      cnvs.ctx.drawImage(this.img, 50*(this.img.count-1), 0, this.w, this.h, this.x, this.y, this.w, this.h);
+      cnvs.ctx.translate(-C.PDNG, -(71+C.PDNG));
+
+    if (angle){
+      cnvs.ctx.restore();
+    };
+  };
+
+  player.drawFrame = function(){
+
+    var angle = this.direction || 0;
+
+    if (angle){
+      var _dx = this.x+C.PDNG + this.w / 2;
+      var _dy = this.y+71+C.PDNG + this.h / 2;
+      angle = angle * (Math.PI/180);
+      cnvs.ctx.save();
+      cnvs.ctx.translate(_dx,_dy);
+      cnvs.ctx.rotate(angle);
+      cnvs.ctx.translate(-_dx,-_dy);
+    };
+
+    cnvs.ctx.translate(C.PDNG, 71+C.PDNG);
+    cnvs.ctx.drawImage(this.img, 0, 0, this.w, this.h, this.x, this.y, this.w, this.h);
+    cnvs.ctx.translate(-C.PDNG, -(71+C.PDNG));
+
+    if (angle){
+      cnvs.ctx.restore();
+    };
+  };
+
+  player.setDirection = function(direction){
+    this.direction = direction;
+  };
+
+  return player;
+};
+
+
+
 //menu
 var logo = new ImgButton( res.arrImages[1], C.WIDTH/2-450/2, 20, 450, 150, "", "logo", 0 );
 var menu = createMenu(["Играть", "Уровни", "Настройки"],["play", "change_level", "options"]);
@@ -107,11 +191,12 @@ var menu = createMenu(["Играть", "Уровни", "Настройки"],["p
 
 //background 
 var matrix = createMatrixBG(); //bg уровня
+var bgLevel = new Image( res.arrImages[8], 0, 0, C.WIDTH, C.HEIGHT );
 var bgOpacity = new Rect(0, 0, C.WIDTH, C.HEIGHT, "rgba(0, 0, 0, 0.5)");
 
 
 //game header
-var header = new ImgButton( res.arrImages[2], 0, 0, C.WIDTH, 70+C.PDNG, "", "header", 0 );
+var header = new Image( res.arrImages[2], 0, 0, C.WIDTH, 70+C.PDNG );
 var bFullScr = new ImgButton( res.arrImages[3], C.WIDTH-45-20, header.h/2-C.CNV_BORDER/2 - 45/2, 45, 45, "", "fullScr", 0 );
 var stopWatch = new Button( 10, header.h/2-C.CNV_BORDER/2 - 40/2, 120, 40, "transparent", "00 : 00 : 00", "stopwatch", 25, "dited" );
 var bPause = new ImgButton( res.arrImages[4], C.WIDTH-45-7-bFullScr.w-20, header.h/2-C.CNV_BORDER/2 - 45/2, 45, 45, "", "pause", 0 );
@@ -135,10 +220,12 @@ var pausePopUp = createPausePopUp(["Вернуться", "Заново", "Вых
 //playable obj
 var pl = new Rect(0,0,50,50,"black");  //игрок
 var box = new Playable(res.arrImages[6],0,0,50,50); //бокс
-var door = new Rect(0,0,50,50, "rgba(231, 23, 32, 0.8)"); //дверь
+var door = new Playable(res.arrImages[7],0,0,50,50); //дверь
 var walls = []; //стены на уровне, заполняется выбранным уровнем.
+var pl = createPlayer();
 
 
+//videos
 var animateBg = new Video(0, 0, C.WIDTH, C.HEIGHT, res.arrVideos[0]);
 
 
@@ -155,6 +242,7 @@ module.exports = objects = {
   box : box,
   door : door,
   walls : walls,
+  bgLevel : bgLevel,
   winPopUp : winPopUp,
   pausePopUp : pausePopUp,
   bgOpacity : bgOpacity,
