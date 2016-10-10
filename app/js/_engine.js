@@ -20,16 +20,15 @@ function gameEngineStep(){
 	nextGameStep(gameEngineStep);
 };
 
-function setGameEngine(){
-	gameEngine = callback;
-};
-
-
 module.exports = {
 
 	gameEngineStart : function (callback){
 		gameEngine = callback;
 		gameEngineStep();
+	},
+
+	setGameEngine : function(callback){
+		gameEngine = callback;
 	}
 
 };

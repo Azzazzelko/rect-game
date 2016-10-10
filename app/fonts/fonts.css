@@ -12,4 +12,18 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'aZZ_Tribute_Bold';
+    src: url('aZZ_Tribute_Cyr_Bold.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Buccaneer';
+    src: url('Buccaneer.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
 

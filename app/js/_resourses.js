@@ -1,5 +1,5 @@
 var resourses = {
-  images : true,
+  images : false,
   video : false,
 
   areLoaded : function(){
@@ -17,13 +17,13 @@ function loadVideo(arrSrcsOfVideo){
 
     var video = document.createElement('video');
     video.src = arrSrcsOfVideo[i];
-    video.onloadeddata = function(){
+    // video.onloadeddata = function(){
       video.oncanplaythrough = function(){
         loadCount++;
         video.loop = true;
         if ( loadCount == count ) resourses.video = true;
       };
-    };
+    // };
 
     arrVideos.push(video);
 
@@ -55,20 +55,32 @@ function loadImages(arrSrcsOfImages){
 };
 
 var arrVideos = loadVideo([
-  "../video/bg.mp4"
+  "video/bg.mp4",
+  "video/Lightmirror.mp4"
 ]);
 
 var arrImages = loadImages([
-  "../img/button-menu.svg",
-  "../img/logo.png",
-  "../img/header3.svg",
-  "../img/fullscreen.svg",
-  "../img/pause.svg",
-  "../img/wall.svg",
-  "../img/crystall-01.svg",
-  "../img/portal.svg",
-  "../img/ground.jpg",
-  '../img/player.png'
+  "img/button-menu.svg",     //0
+  "img/logo.png",            //1
+  "img/header3.svg",         //2
+  "img/fullscreen.svg",      //3
+  "img/pause.svg",           //4
+  "img/wall.svg",            //5
+  "img/crystall-01.svg",     //6
+  "img/portal.svg",          //7
+  "img/ground.jpg",          //8
+  'img/player.png',          //9
+  "img/exit-button.svg",     //10
+  "img/restart-button.svg",  //11
+  "img/exit_in_menu-button.svg", //12
+  "img/pause-bg.svg",        //13
+  "img/pause_text.svg",      //14
+  "img/button_next.svg",     //15
+  "img/bg_win.svg",          //16
+  "img/levels_2.svg",        //17
+  "img/levels_next.svg",     //18
+  "img/levels_prev.svg",     //19
+  "img/levels_in_menu.svg"   //20
 ]);
 
 module.exports = { 

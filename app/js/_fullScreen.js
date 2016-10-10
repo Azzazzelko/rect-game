@@ -1,3 +1,25 @@
+var canvas = require('./_canvas.js');
+var C = require('./_const.js');
+
+var zoom = 0;
+
+function fullCanvas(){
+
+	var deviceWidth = window.screen.availWidth;
+	var deviceHeight = window.screen.availHeight;
+	zoom = (deviceHeight / C.HEIGHT).toFixed(1);
+
+	canvas.cnv.width = canvas.cnv.width*zoom;
+	canvas.cnv.height = canvas.cnv.height*zoom;
+	canvas.ctx.scale(zoom,zoom);
+};
+
+function normalCanvas(){
+	canvas.cnv.width = canvas.cnv.width/zoom;
+	canvas.cnv.height = canvas.cnv.height/zoom;
+	canvas.ctx.scale(1,1);
+};
+
 module.exports = { 
 
 	launchFullScreen : function(elem){
@@ -10,7 +32,8 @@ module.exports = {
 			elem.webkitRequestFullScreen();
 		};
 
-		this.status = true; 
+		fullCanvas();
+		this.isFullScreen = true; 
 	},
 
 	canselFullScreen : function(){
@@ -23,9 +46,12 @@ module.exports = {
 			document.webkitExitFullscreen();
 		};
 
-		this.status = false;
+		normalCanvas();
+		this.isFullScreen = false;
 	},
 
-	status : false
+	isFullScreen : false,
+
+	zoom : zoom
 
 };

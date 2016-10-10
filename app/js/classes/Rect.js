@@ -13,8 +13,6 @@ module.exports = Rect = function(x, y, w, h, color, isStroke){ //класс ку
   this.isStroke = isStroke || false;
 
   this.draw = function(){
-    ctx.save();
-    ctx.translate(C.PDNG, 71+C.PDNG);
     if (!this.isStroke) {
       ctx.fillStyle = this.color;
       ctx.fillRect(this.x, this.y, this.w, this.h);
@@ -22,7 +20,6 @@ module.exports = Rect = function(x, y, w, h, color, isStroke){ //класс ку
       ctx.strokeStyle = this.color;
       ctx.strokeRect(this.x, this.y, this.w, this.h);
     }
-    ctx.restore();
   };
   
   this.move = function(direction){

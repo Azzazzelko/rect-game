@@ -4,35 +4,30 @@ var hf = require('./_helperFunctions.js');
 var engin = require('./_engine.js');
 var res = require('./_resourses.js');
 
-//VREMENNO!!!
-var ctx = require('./_canvas.js').ctx;
-
 module.exports = gameLoops =  {
 
   loader : function(){
 
     gameLoops.status = "loader";
 
-    o.TEST.draw();
-    if ( res.resourses.areLoaded() ) engin.gameEngineStart(gameLoops.menu);
-
+    o.PRELOADER.draw();
+    if ( res.resourses.areLoaded() ) engin.setGameEngine(gameLoops.menu);
   },
 
   game : function(){
 
     gameLoops.status = "game"; 
 
-    hf.clearRect(0,0,C.WIDTH,C.HEIGHT); //очистка области
-
-    //ВРЕМЕННО!!!
-    ctx.fillStyle = "black";
-    ctx.fillRect(0,0,C.WIDTH,C.HEIGHT);
+    //очистка области
+    hf.clearRect(0,0,C.WIDTH,C.HEIGHT);
 
     o.bgLevel.draw();
+    
     //выводим матричное поле игры
     for ( i in o.matrix ){
       o.matrix[i].draw();
     };
+
     //выводим стены\преграды
     for ( i in o.walls ){
       o.walls[i].draw();
@@ -59,7 +54,7 @@ module.exports = gameLoops =  {
     //**********************
     if ( hf.isWin() ){
       o.bgOpacity.draw();
-      engin.gameEngineStart(gameLoops.win);
+      engin.setGameEngine(gameLoops.win);
     };
   },
 
@@ -76,6 +71,7 @@ module.exports = gameLoops =  {
     for ( i in o.menu ){
       o.menu[i].draw();
     };
+
   },
 
   win : function(){
@@ -83,7 +79,8 @@ module.exports = gameLoops =  {
     gameLoops.status = "win";
 
     for ( i in o.winPopUp ){
-      if ( o.winPopUp[i].name == "win_text" ) o.winPopUp[i].txt = "Уровень "+gameLoops.currentLevel+" пройден!";
+      if ( o.winPopUp[i].name == "win_text" ) o.winPopUp[i].txt = "Уровень "+gameLoops.currentLevel;
+      
       if ( o.winPopUp[i].name == "pop_next" && gameLoops.currentLevel == levels.lvlsCount() ) {
         continue;
       } else {
@@ -106,6 +103,8 @@ module.exports = gameLoops =  {
     gameLoops.status = "levels";
 
     hf.clearRect(0,0,C.WIDTH,C.HEIGHT);
+
+    o.videoBgLevels.draw();
 
     o.levelsHeader.draw();
 

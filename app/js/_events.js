@@ -115,10 +115,10 @@ function loadLevel(number){ //загрузка уровня
   levels[number](); 
   gameLoops.currentLevel = number; 
   o.currLevel.txt = "Уровень "+number;
-  engin.gameEngineStart(gameLoops.game);
+  engin.setGameEngine(gameLoops.game);
 };
 
-window.onkeydown = function(e){ //событие нажатия клавишь
+window.onkeydown = function(e){ //событие нажатия клавиш
 
   if ( gLoo.status == "game" ){ //передвигаться только если идет игра.
 
@@ -143,8 +143,13 @@ window.onkeydown = function(e){ //событие нажатия клавишь
 
 window.onmousedown = function(e){ //cобытие нажатия мышки
 
-  var x = e.pageX-canvas.cnv.offsetLeft;
-  var y = e.pageY-canvas.cnv.offsetTop;
+  if ( fs.isFullScreen ){      
+    var x = (e.pageX-canvas.cnv.offsetLeft)/fs.zoom;
+    var y = (e.pageY-canvas.cnv.offsetTop)/fs.zoom;
+  } else {
+    var x = e.pageX-canvas.cnv.offsetLeft;
+    var y = e.pageY-canvas.cnv.offsetTop;
+  };
 
   switch (gLoo.status){
 
@@ -158,7 +163,7 @@ window.onmousedown = function(e){ //cобытие нажатия мышки
             break;
 
             case "change_level" :
-            engin.gameEngineStart(gameLoops.levels);
+            engin.setGameEngine(gameLoops.levels);
             break;
 
           };
@@ -176,7 +181,7 @@ window.onmousedown = function(e){ //cобытие нажатия мышки
             break;
 
             case "to_menu" :
-            engin.gameEngineStart(gameLoops.menu);
+            engin.setGameEngine(gameLoops.menu);
             break;
 
             case "next" :
@@ -199,15 +204,11 @@ window.onmousedown = function(e){ //cобытие нажатия мышки
       if ( isCursorInButton(x,y,o.bPause) ){
         sw.pauseTimer();
         o.bgOpacity.draw();
-        engin.gameEngineStart(gameLoops.pause);
+        engin.setGameEngine(gameLoops.pause);
       };
 
       if ( isCursorInButton(x,y,o.bFullScr) ){
-        // console.log(C.HEIGHT);
-        // canvas.cnv.width = canvas.cnv.width*2;
-        // canvas.cnv.height = canvas.cnv.height*2;
-        // canvas.ctx.scale(2,2);
-        ( !fs.status ) ? fs.launchFullScreen(canvas.cnv) : fs.canselFullScreen(); 
+        ( !fs.isFullScreen ) ? fs.launchFullScreen(canvas.cnv) : fs.canselFullScreen(); 
       };
       break;
 
@@ -216,7 +217,7 @@ window.onmousedown = function(e){ //cобытие нажатия мышки
       for ( i in o.winPopUp ){
         if ( isCursorInButton(x,y,o.winPopUp[i]) ){
           if ( o.winPopUp[i].name == "pop_exit" ){
-            engin.gameEngineStart(gameLoops.menu);
+            engin.setGameEngine(gameLoops.menu);
           } else if ( o.winPopUp[i].name == "pop_next" && gameLoops.currentLevel != levels.lvlsCount() ){
             sw.reset();
             gameLoops.currentLevel++;
@@ -233,7 +234,7 @@ window.onmousedown = function(e){ //cобытие нажатия мышки
 
             case "return" :
               sw.start();
-              engin.gameEngineStart(gameLoops.game);
+              engin.setGameEngine(gameLoops.game);
               break;
 
             case "restart" :
@@ -243,11 +244,39 @@ window.onmousedown = function(e){ //cобытие нажатия мышки
 
             case "exit" :
               sw.reset();
-              engin.gameEngineStart(gameLoops.menu);
+              engin.setGameEngine(gameLoops.menu);
               break;
 
           };
         };
+      };
+      break;
+
+  };
+};
+
+
+window.onmousemove = function(e){ //события движения мышки
+
+  if ( fs.isFullScreen ){
+    var x = (e.pageX-canvas.cnv.offsetLeft)/fs.zoom;
+    var y = (e.pageY-canvas.cnv.offsetTop)/fs.zoom;
+  } else {
+    var x = e.pageX-canvas.cnv.offsetLeft;
+    var y = e.pageY-canvas.cnv.offsetTop;
+  };
+
+  switch (gLoo.status){
+
+    case "game" :
+      if ( isCursorInButton(x,y,o.bPause) ){
+        console.log("PAUSE");
+        // document.body.style.cursor = "pointer";
+      };
+
+      if ( isCursorInButton(x,y,o.bFullScr) ){
+        console.log("FULL");
+        // document.body.style.cursor = "pointer";
       };
       break;
 
