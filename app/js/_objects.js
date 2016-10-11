@@ -3,10 +3,10 @@ var cnvs = require('./_canvas.js');
 var res = require('./_resourses.js');
 
 
-function createMatrixBG(){
-  var matrix = []; //массив для матричного вида уровня
+function createMatrixBG(){ //создаем матричное поле
+  var matrix = [];                     //массив для матричного вида уровня
 
-  for (var i = 0; i < 9; i++){ //заполняем объект
+  for (var i = 0; i < 9; i++){         //заполняем объект
     for (var j = 0; j < 9; j++){
       matrix.push( new Rect(C.PDNG+j*(50+C.PDNG), 71+C.PDNG+i*(50+C.PDNG), 50, 50, "rgba(0,0,0,0.5)", true) );
     }
@@ -26,20 +26,21 @@ function createMenu(txtArr, nameArr){  //создаем главное меню
   var _y = (C.HEIGHT/2) - (85*amounts/2) + 85; 
 
   for (var i = 0; i < amounts; i++){
-    menu.push( new ImgButton( res.arrImages[0], _x, _y+i*85, 300, 60, txt[i], names[i], _fontsize, 135 ) );
+    menu.push( new ImgButton( res.arrImages[0], _x, _y+i*85, 300, 60, txt[i], names[i], _fontsize, 83 ) );
+    menu[i].hoverImg = res.arrImages[21];
   };
 
   return menu;
 };
 
-function createWinPopUp(){
+function createWinPopUp(){ //создаем победную вспллывашку
 
   var winPopBG = new Image( res.arrImages[16], C.WIDTH/2-320/2, C.HEIGHT/2-200/2, 320, 200);
   var bPopExit = new ImgButton( res.arrImages[12], winPopBG.x+30,  winPopBG.y+winPopBG.h-50, 80, 65, "", "pop_exit", 0 );
   var bPopNext = new ImgButton( res.arrImages[15], winPopBG.x+30+110+80,  winPopBG.y+winPopBG.h-50, 80, 65, "", "pop_next", 0 );
 
   var winText = new Button( C.WIDTH/2-90/2, winPopBG.y+15, 90, 40, "transparent", "Уровень N", "win_text", 30, "Buccaneer" );
-  var winText_2 = new Button( C.WIDTH/2-90/2+10, winPopBG.y+80, 90, 40, "transparent", "пройден!", "win_text_2", 50, "aZZ_Tribute_Bold" );
+  var winText_2 = new Button( C.WIDTH/2-90/2+10, winPopBG.y+80, 90, 40, "transparent", "ПРОЙДЕН!", "win_text_2", 50, "aZZ_Tribute_Bold" );
 
   winText.txtColor = "#D9C425";
 
@@ -49,7 +50,7 @@ function createWinPopUp(){
   return winPopUp;
 };
 
-function createPausePopUp(){
+function createPausePopUp(){  //создаем пауз всплывашку
 
   var pausePopUp = [];
   var bgPause = new Image( res.arrImages[13], C.WIDTH/2-300/2, C.HEIGHT/2-207/2, 300, 207);
@@ -63,7 +64,7 @@ function createPausePopUp(){
   return pausePopUp;
 };
 
-function createLevelsButtons(levels_count){
+function createLevelsButtons(levels_count){ //создаем кнопки в выборе уровня
 
   var bLevelsButtons = [];
   var j = 0, dy = 85, dx = 0;
@@ -85,7 +86,7 @@ function createLevelsButtons(levels_count){
   return bLevelsButtons;
 };
 
-function createLevelsFooter(){
+function createLevelsFooter(){  //создаем футер в выборе уровня
 
   var levelsFooter = [];
 
@@ -99,7 +100,7 @@ function createLevelsFooter(){
   return levelsFooter;
 };
 
-function createPlayer(){
+function createPlayer(){  //создаем игрока с уникальными методами
 
   var player = new Playable(res.arrImages[9],0,0,50,50);
   player.direction = false;
@@ -139,9 +140,9 @@ function createPlayer(){
       }, 1000/(delay*2) );
     };
 
-      cnvs.ctx.translate(C.PDNG, 71+C.PDNG);
-      cnvs.ctx.drawImage(this.img, 50*(this.img.count-1), 0, this.w, this.h, this.x, this.y, this.w, this.h);
-      cnvs.ctx.translate(-C.PDNG, -(71+C.PDNG));
+    cnvs.ctx.translate(C.PDNG, 71+C.PDNG);
+    cnvs.ctx.drawImage(this.img, 50*(this.img.count-1), 0, this.w, this.h, this.x, this.y, this.w, this.h);
+    cnvs.ctx.translate(-C.PDNG, -(71+C.PDNG));
 
     if (angle){
       cnvs.ctx.restore();

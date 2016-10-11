@@ -21,37 +21,32 @@ module.exports = gameLoops =  {
     //очистка области
     hf.clearRect(0,0,C.WIDTH,C.HEIGHT);
 
+    //отрисовка бг уровня
     o.bgLevel.draw();
     
-    //выводим матричное поле игры
+    //отрисовка матричное поле игры
     for ( i in o.matrix ){
       o.matrix[i].draw();
     };
 
-    //выводим стены\преграды
+    //отрисовка стены\преграды
     for ( i in o.walls ){
       o.walls[i].draw();
     };
 
-    //**********************
-    //****Выводим Хедер*****
-    //**********************
+    //отрисовка хедера уровня
     o.header.draw();
     o.stopWatch.draw(1,10);
     o.bFullScr.draw();
     o.bPause.draw();
     o.currLevel.draw();
 
-    //**********************
-    //****Выводим объекты*****
-    //**********************
+    //отрисовка игровых объектов
     o.door.draw();
     o.pl.draw();
     o.box.draw();
 
-    //**********************
-    //****Если победили*****
-    //**********************
+    //если победили
     if ( hf.isWin() ){
       o.bgOpacity.draw();
       engin.setGameEngine(gameLoops.win);

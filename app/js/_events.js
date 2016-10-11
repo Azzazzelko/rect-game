@@ -8,6 +8,7 @@ var canvas = require('./_canvas.js');
 var fs = require('./_fullScreen.js');
 var C = require('./_const.js');
 var key = require('./_key.js');
+var res = require('./_resourses.js');
 
 var gameLoops = gLoo;
 
@@ -143,6 +144,8 @@ window.onkeydown = function(e){ //событие нажатия клавиш
 
 window.onmousedown = function(e){ //cобытие нажатия мышки
 
+  if ( canvas.cnv.style.cursor != "default" ) canvas.cnv.style.cursor = "default";  //всегда при клике на любую кнопку, что б курсор стандартизировался
+
   if ( fs.isFullScreen ){      
     var x = (e.pageX-canvas.cnv.offsetLeft)/fs.zoom;
     var y = (e.pageY-canvas.cnv.offsetTop)/fs.zoom;
@@ -268,17 +271,44 @@ window.onmousemove = function(e){ //события движения мышки
 
   switch (gLoo.status){
 
+    case "menu" :
+      for ( i in o.menu ){
+        o.menu[i].hover();
+        if ( isCursorInButton(x,y,o.menu[i]) ){
+          switch (o.menu[i].name) {
+
+            case "play" :
+              o.menu[i].hover(1);
+              break;
+
+            case "change_level" :
+              o.menu[i].hover(1);
+              break;
+          };
+        };
+      };
+      break;
+
     case "game" :
       if ( isCursorInButton(x,y,o.bPause) ){
-        console.log("PAUSE");
         // document.body.style.cursor = "pointer";
       };
 
       if ( isCursorInButton(x,y,o.bFullScr) ){
-        console.log("FULL");
         // document.body.style.cursor = "pointer";
       };
       break;
 
+    case "win" :
+      for ( i in o.winPopUp ){
+        if ( isCursorInButton(x,y,o.winPopUp[i]) ){
+          if ( o.winPopUp[i].name == "pop_exit" ){
+
+          } else if ( o.winPopUp[i].name == "pop_next" && gameLoops.currentLevel != levels.lvlsCount() ){
+            
+          };
+        };
+      };
+      break;
   };
 };
