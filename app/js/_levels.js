@@ -1,6 +1,7 @@
 var C = require('./_const.js');
 var o = require('./_objects.js');
 var res = require('./_resourses.js');
+var hf = require('./_helperFunctions.js');
 
 module.exports = levels = {
 
@@ -22,6 +23,7 @@ module.exports = levels = {
 		};				  //заполняем массив walls
 
 		o.pl.setPosition( 0, 0 );
+		o.pl.setDirection( hf.directionIs("right") );
 		o.box.setPosition( 0+2*(50+C.PDNG), 7*(50+C.PDNG) );
 		o.door.setPosition( 0+8*(50+C.PDNG), 0*(50+C.PDNG) );
 
@@ -41,6 +43,7 @@ module.exports = levels = {
 		};				  
 
 		o.pl.setPosition( 0, 0+8*(50+C.PDNG) );
+		o.pl.setDirection( hf.directionIs("right") );
 		o.box.setPosition( 0+6*(50+C.PDNG), 0+7*(50+C.PDNG) );
 		o.door.setPosition( 0+8*(50+C.PDNG), 0+6*(50+C.PDNG) );
 
@@ -60,6 +63,7 @@ module.exports = levels = {
 		};				  
 
 		o.pl.setPosition( 0+8*(50+C.PDNG), 0+8*(50+C.PDNG) );
+		o.pl.setDirection( hf.directionIs("up") );
 		o.box.setPosition( 0+1*(50+C.PDNG), 0+6*(50+C.PDNG) );
 		o.door.setPosition( 0+2*(50+C.PDNG), 0+3*(50+C.PDNG) );
 
@@ -79,6 +83,7 @@ module.exports = levels = {
 		};				  
 
 		o.pl.setPosition( 0+7*(50+C.PDNG), 0+8*(50+C.PDNG) );
+		o.pl.setDirection( hf.directionIs("up") );
 		o.box.setPosition( 0+7*(50+C.PDNG), 0+7*(50+C.PDNG) );
 		o.door.setPosition( 0+6*(50+C.PDNG), 0+0*(50+C.PDNG) );
 
@@ -98,6 +103,7 @@ module.exports = levels = {
 		};				  
 
 		o.pl.setPosition( 0, 0+0*(50+C.PDNG) );
+		o.pl.setDirection( hf.directionIs("down") );
 		o.box.setPosition( 0+1*(50+C.PDNG), 0+1*(50+C.PDNG) );
 		o.door.setPosition( 0, 0+8*(50+C.PDNG) );
 

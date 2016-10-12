@@ -33,7 +33,7 @@ var isBorder = { //принимает объект, возвращает сто�
 var isNear = { //принимает 2 объекта, возвращает стоит ли с запрашиваемой стороны 1ый от 2го.
 
   up : function(obj_1, obj_2){
-    if ( Object.prototype.toString.call(obj_2) == '[object Array]' ) {
+    if ( Object.prototype.toString.call(obj_2) == '[object Array]' ) {  //проверка передаваемый элемент массив объектов или объект.
       var move = false;
       for ( var i=0; i<obj_2.length;i++ ){
         move = obj_2[i].y + obj_2[i].w + C.PDNG == obj_1.y && obj_1.x == obj_2[i].x;
@@ -77,25 +77,25 @@ var isNear = { //принимает 2 объекта, возвращает ст�
   }
 };
 
-function directionIs(direction){  //возвращает угол поворота в градусах
+// function directionIs(direction){  //возвращает угол поворота в градусах, можно было и сделать проще - объектом.
 
-  switch(direction){
+//   switch(direction){
 
-    case "up"   : return 360;
-    break;
-    case "down" : return 180;
-    break;
-    case "left" : return 270;
-    break;
-    case "right": return 90;
-    break;
+//     case "up"   : return 360;
+//     break;
+//     case "down" : return 180;
+//     break;
+//     case "left" : return 270;
+//     break;
+//     case "right": return 90;
+//     break;
 
-  };
-};
+//   };
+// };
 
 function canMoveObj(direction){  //(описываем границы движения) разрешает движение в пределах уровня
 
-  o.pl.direction = o.pl.isMove = directionIs(direction);
+  o.pl.direction = o.pl.isMove = hf.directionIs(direction);
   if ( isNear[direction](o.pl, o.box) && !isBorder[direction](o.box) && !isNear[direction](o.box, o.walls) ){ //если рядом с ящиком и ящик не у границ, двигаем.
     o.pl.move(direction);
     o.box.move(direction);
@@ -112,11 +112,11 @@ function isCursorInButton(x,y,but){ //возвращает тру, если ку
 };
 
 function loadLevel(number){ //загрузка уровня
-  sw.start();
-  levels[number](); 
-  gameLoops.currentLevel = number; 
-  o.currLevel.txt = "Уровень "+number;
-  engin.setGameEngine(gameLoops.game);
+  sw.start();                          //запускаем таймер
+  levels[number]();                    //запускаем уроверь который запросили
+  gameLoops.currentLevel = number;     //запоминаем какой сейчас уровень играть будем 
+  o.currLevel.txt = "Уровень "+number; //в хедере выводим номер уровня
+  engin.setGameEngine(gameLoops.game); //ну и запускаем цикл игры 
 };
 
 window.onkeydown = function(e){ //событие нажатия клавиш
@@ -143,8 +143,6 @@ window.onkeydown = function(e){ //событие нажатия клавиш
 };
 
 window.onmousedown = function(e){ //cобытие нажатия мышки
-
-  if ( canvas.cnv.style.cursor != "default" ) canvas.cnv.style.cursor = "default";  //всегда при клике на любую кнопку, что б курсор стандартизировался
 
   if ( fs.isFullScreen ){      
     var x = (e.pageX-canvas.cnv.offsetLeft)/fs.zoom;
@@ -258,8 +256,7 @@ window.onmousedown = function(e){ //cобытие нажатия мышки
   };
 };
 
-
-window.onmousemove = function(e){ //события движения мышки
+window.onmousemove = function(e){ //события движения мышки, тут ховеры обработаем
 
   if ( fs.isFullScreen ){
     var x = (e.pageX-canvas.cnv.offsetLeft)/fs.zoom;
@@ -273,40 +270,46 @@ window.onmousemove = function(e){ //события движения мышки
 
     case "menu" :
       for ( i in o.menu ){
-        o.menu[i].hover();
-        if ( isCursorInButton(x,y,o.menu[i]) ){
-          switch (o.menu[i].name) {
-
-            case "play" :
-              o.menu[i].hover(1);
-              break;
-
-            case "change_level" :
-              o.menu[i].hover(1);
-              break;
-          };
-        };
+        ( isCursorInButton(x,y,o.menu[i]) ) ? o.menu[i].hover(1) : o.menu[i].hover();
       };
       break;
 
     case "game" :
-      if ( isCursorInButton(x,y,o.bPause) ){
-        // document.body.style.cursor = "pointer";
-      };
+      ( isCursorInButton(x,y,o.bPause) ) ? o.bPause.hover(1) : o.bPause.hover();
 
-      if ( isCursorInButton(x,y,o.bFullScr) ){
-        // document.body.style.cursor = "pointer";
-      };
+      ( isCursorInButton(x,y,o.bFullScr) ) ? o.bFullScr.hover(1) : o.bFullScr.hover();  
       break;
 
     case "win" :
       for ( i in o.winPopUp ){
         if ( isCursorInButton(x,y,o.winPopUp[i]) ){
           if ( o.winPopUp[i].name == "pop_exit" ){
-
+            o.winPopUp[i].hover(1);
           } else if ( o.winPopUp[i].name == "pop_next" && gameLoops.currentLevel != levels.lvlsCount() ){
-            
+            o.winPopUp[i].hover(1);
           };
+        } else {
+          if ( o.winPopUp[i].hover ) o.winPopUp[i].hover();
+        };
+      };
+      break;
+
+    case "levels" :
+      for ( i in o.levelsFooter ){
+        ( isCursorInButton(x,y,o.levelsFooter[i]) ) ? o.levelsFooter[i].hover(1) : o.levelsFooter[i].hover();
+      };
+
+      for ( var i = 0; i < o.bLevelsButtons.length; i++ ){
+        ( isCursorInButton(x,y,o.bLevelsButtons[i]) ) ? o.bLevelsButtons[i].hover(1) : o.bLevelsButtons[i].hover();
+      };
+      break;
+  
+    case "pause" :
+      for ( i in o.pausePopUp ){
+        if ( isCursorInButton(x,y,o.pausePopUp[i]) ){
+          if ( o.pausePopUp[i].hover ) o.pausePopUp[i].hover(1);
+        } else {
+          if ( o.pausePopUp[i].hover ) o.pausePopUp[i].hover();
         };
       };
       break;

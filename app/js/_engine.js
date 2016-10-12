@@ -1,6 +1,7 @@
 //*****************************************
 //**кросбраузерное упрвление циклами игры**
 //*****************************************
+var canvas = require("./_canvas.js");
 
 var gameEngine;
 
@@ -28,6 +29,7 @@ module.exports = {
 	},
 
 	setGameEngine : function(callback){
+		if ( canvas.cnv.style.cursor != "default" ) canvas.cnv.style.cursor = "default";  //всегда при клике на любую кнопку, что б курсор стандартизировался
 		gameEngine = callback;
 	}
 

@@ -37,8 +37,9 @@ function createWinPopUp(){ //создаем победную вспллываш�
 
   var winPopBG = new Image( res.arrImages[16], C.WIDTH/2-320/2, C.HEIGHT/2-200/2, 320, 200);
   var bPopExit = new ImgButton( res.arrImages[12], winPopBG.x+30,  winPopBG.y+winPopBG.h-50, 80, 65, "", "pop_exit", 0 );
+  bPopExit.hoverImg = res.arrImages[26];
   var bPopNext = new ImgButton( res.arrImages[15], winPopBG.x+30+110+80,  winPopBG.y+winPopBG.h-50, 80, 65, "", "pop_next", 0 );
-
+  bPopNext.hoverImg = res.arrImages[29];
   var winText = new Button( C.WIDTH/2-90/2, winPopBG.y+15, 90, 40, "transparent", "Уровень N", "win_text", 30, "Buccaneer" );
   var winText_2 = new Button( C.WIDTH/2-90/2+10, winPopBG.y+80, 90, 40, "transparent", "ПРОЙДЕН!", "win_text_2", 50, "aZZ_Tribute_Bold" );
 
@@ -55,8 +56,11 @@ function createPausePopUp(){  //создаем пауз всплывашку
   var pausePopUp = [];
   var bgPause = new Image( res.arrImages[13], C.WIDTH/2-300/2, C.HEIGHT/2-207/2, 300, 207);
   var bReturn = new ImgButton( res.arrImages[10], bgPause.x+190,  bgPause.y-25, 63, 57, "", "return", 0 );
+  bReturn.hoverImg = res.arrImages[24];
   var bExitToMenu = new ImgButton( res.arrImages[12],  bgPause.x+50,  bgPause.y+bgPause.h-50, 85, 70, "", "exit", 0 );
+  bExitToMenu.hoverImg = res.arrImages[26];
   var bRestart = new ImgButton( res.arrImages[11],  bgPause.x+50+30+85,  bgPause.y+bgPause.h-50, 85, 70, "", "restart", 0 );
+  bRestart.hoverImg = res.arrImages[25];
   var pauseText = new Image( res.arrImages[14], bgPause.x + bgPause.w/2 - 150/2, bgPause.y + bgPause.h/2 - 100/2, 150, 100);
 
   pausePopUp.push(bgPause, bReturn, bExitToMenu, bRestart, pauseText);
@@ -73,6 +77,7 @@ function createLevelsButtons(levels_count){ //создаем кнопки в в�
     dx = 8+j*(100+15);
 
     bLevelsButtons.push( new ImgButton( res.arrImages[17], dx, dy, 100, 100, i+1, "level_"+(i+1), 35 ) );
+    bLevelsButtons[i].hoverImg = res.arrImages[27];
 
     j++;
 
@@ -93,6 +98,7 @@ function createLevelsFooter(){  //создаем футер в выборе ур
   var bPrev = new ImgButton( res.arrImages[19], 20, C.HEIGHT-10-67, 40, 67, "", "prev", 0 );
   var bNext = new ImgButton( res.arrImages[18], C.WIDTH-20-40, C.HEIGHT-10-67, 40, 67, "", "next", 0 );
   var bToMenu = new ImgButton( res.arrImages[20], C.WIDTH/2 - 320/2, C.HEIGHT-10-67, 320, 67, "Вернуться в меню", "to_menu", 25 );
+  bToMenu.hoverImg = res.arrImages[28];
   bToMenu.txtColor = "#000046";
 
   levelsFooter.push(bPrev,bNext,bToMenu);
@@ -195,8 +201,10 @@ var bgOpacity = new Rect(0, 0, C.WIDTH, C.HEIGHT, "rgba(0, 0, 0, 0.5)");
 //game header
 var header = new Image( res.arrImages[2], 0, 0, C.WIDTH, 71+C.PDNG );
 var bFullScr = new ImgButton( res.arrImages[3], C.WIDTH-45-20, header.h/2-C.CNV_BORDER/2 - 45/2, 45, 45, "", "fullScr", 0 );
+bFullScr.hoverImg = res.arrImages[22];
 var stopWatch = new Button( 10, header.h/2-C.CNV_BORDER/2 - 40/2, 120, 40, "transparent", "00 : 00 : 00", "stopwatch", 25, "dited" );
 var bPause = new ImgButton( res.arrImages[4], C.WIDTH-45-7-bFullScr.w-20, header.h/2-C.CNV_BORDER/2 - 45/2, 45, 45, "", "pause", 0 );
+bPause.hoverImg = res.arrImages[23];
 var currLevel = new Button( (stopWatch.x+stopWatch.w+bPause.x)/2-140/2, header.h/2-C.CNV_BORDER/2 - 40/2, 140, 40, "transparent", "Уровень", "curr_level", 25, "capture_it" );
 
 
