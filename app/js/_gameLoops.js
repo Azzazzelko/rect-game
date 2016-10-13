@@ -3,6 +3,7 @@ var o = require('./_objects.js');
 var hf = require('./_helperFunctions.js');
 var engin = require('./_engine.js');
 var res = require('./_resourses.js');
+var preloader = require('./_preloader.js');
 
 module.exports = gameLoops =  {
 
@@ -10,7 +11,10 @@ module.exports = gameLoops =  {
 
     gameLoops.status = "loader";
 
-    o.PRELOADER.draw();
+    preloader.updateLoader();
+    preloader.drawLoader();
+    preloader.drawLoadText();
+    
     if ( res.resourses.areLoaded() ) engin.setGameEngine(gameLoops.menu);
   },
 

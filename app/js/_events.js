@@ -1,14 +1,14 @@
-var o = require('./_objects.js');
-var sw = require('./_stopwatch.js');
+var o      = require('./_objects.js');
+var sw     = require('./_stopwatch.js');
 var levels = require('./_levels.js');
-var engin = require('./_engine.js');
-var gLoo = require('./_gameLoops.js');
-var hf = require('./_helperFunctions.js');
+var engin  = require('./_engine.js');
+var gLoo   = require('./_gameLoops.js');
+var hf     = require('./_helperFunctions.js');
 var canvas = require('./_canvas.js');
-var fs = require('./_fullScreen.js');
-var C = require('./_const.js');
-var key = require('./_key.js');
-var res = require('./_resourses.js');
+var fs     = require('./_fullScreen.js');
+var C      = require('./_const.js');
+var key    = require('./_key.js');
+var res    = require('./_resourses.js');
 
 var gameLoops = gLoo;
 
@@ -30,7 +30,7 @@ var isBorder = { //принимает объект, возвращает сто�
   }
 };
 
-var isNear = { //принимает 2 объекта, возвращает стоит ли с запрашиваемой стороны 1ый от 2го.
+var isNear = {   //принимает 2 объекта, возвращает стоит ли с запрашиваемой стороны 1ый от 2го.
 
   up : function(obj_1, obj_2){
     if ( Object.prototype.toString.call(obj_2) == '[object Array]' ) {  //проверка передаваемый элемент массив объектов или объект.
@@ -77,26 +77,10 @@ var isNear = { //принимает 2 объекта, возвращает ст�
   }
 };
 
-// function directionIs(direction){  //возвращает угол поворота в градусах, можно было и сделать проще - объектом.
-
-//   switch(direction){
-
-//     case "up"   : return 360;
-//     break;
-//     case "down" : return 180;
-//     break;
-//     case "left" : return 270;
-//     break;
-//     case "right": return 90;
-//     break;
-
-//   };
-// };
-
 function canMoveObj(direction){  //(описываем границы движения) разрешает движение в пределах уровня
 
   o.pl.direction = o.pl.isMove = hf.directionIs(direction);
-  if ( isNear[direction](o.pl, o.box) && !isBorder[direction](o.box) && !isNear[direction](o.box, o.walls) ){ //если рядом с ящиком и ящик не у границ, двигаем.
+  if ( isNear[direction](o.pl, o.box) && !isBorder[direction](o.box) && !isNear[direction](o.box, o.walls) ){      //если рядом с ящиком и ящик не у границ, двигаем.
     o.pl.move(direction);
     o.box.move(direction);
   } else if( !isNear[direction](o.pl, o.box) && !isBorder[direction](o.pl) && !isNear[direction](o.pl, o.walls) ){ //если не рядом с ящиком и не рядом с границей, двигаемся.
@@ -111,7 +95,7 @@ function isCursorInButton(x,y,but){ //возвращает тру, если ку
   y <= but.y+but.h
 };
 
-function loadLevel(number){ //загрузка уровня
+function loadLevel(number){       //загрузка уровня
   sw.start();                          //запускаем таймер
   levels[number]();                    //запускаем уроверь который запросили
   gameLoops.currentLevel = number;     //запоминаем какой сейчас уровень играть будем 
@@ -119,7 +103,7 @@ function loadLevel(number){ //загрузка уровня
   engin.setGameEngine(gameLoops.game); //ну и запускаем цикл игры 
 };
 
-window.onkeydown = function(e){ //событие нажатия клавиш
+window.onkeydown = function(e){   //событие нажатия клавиш
 
   if ( gLoo.status == "game" ){ //передвигаться только если идет игра.
 

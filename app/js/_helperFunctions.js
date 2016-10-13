@@ -6,7 +6,7 @@ var ctx = canvas.ctx;
 
 module.exports = {
 
-  clearRect : function(x,y,w,h){  //очиститель
+  clearRect : function(x,y,w,h){      //очиститель
     ctx.clearRect(x,y,w,h);
   },
 
@@ -14,7 +14,7 @@ module.exports = {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   },
 
-  isWin : function(){ //победили?
+  isWin : function(){                 //победили?
     return o.box.x == o.door.x && o.box.y == o.door.y;
   },
 

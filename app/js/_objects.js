@@ -3,7 +3,7 @@ var cnvs = require('./_canvas.js');
 var res = require('./_resourses.js');
 
 
-function createMatrixBG(){ //создаем матричное поле
+function createMatrixBG(){             //создаем матричное поле
   var matrix = [];                     //массив для матричного вида уровня
 
   for (var i = 0; i < 9; i++){         //заполняем объект
@@ -33,7 +33,7 @@ function createMenu(txtArr, nameArr){  //создаем главное меню
   return menu;
 };
 
-function createWinPopUp(){ //создаем победную вспллывашку
+function createWinPopUp(){             //создаем победную вспллывашку
 
   var winPopBG = new Image( res.arrImages[16], C.WIDTH/2-320/2, C.HEIGHT/2-200/2, 320, 200);
   var bPopExit = new ImgButton( res.arrImages[12], winPopBG.x+30,  winPopBG.y+winPopBG.h-50, 80, 65, "", "pop_exit", 0 );
@@ -51,7 +51,7 @@ function createWinPopUp(){ //создаем победную вспллываш�
   return winPopUp;
 };
 
-function createPausePopUp(){  //создаем пауз всплывашку
+function createPausePopUp(){           //создаем пауз всплывашку
 
   var pausePopUp = [];
   var bgPause = new Image( res.arrImages[13], C.WIDTH/2-300/2, C.HEIGHT/2-207/2, 300, 207);
@@ -90,8 +90,8 @@ function createLevelsButtons(levels_count){ //создаем кнопки в в�
 
   return bLevelsButtons;
 };
-
-function createLevelsFooter(){  //создаем футер в выборе уровня
+                                       
+function createLevelsFooter(){         //создаем футер в выборе уровня
 
   var levelsFooter = [];
 
@@ -106,7 +106,7 @@ function createLevelsFooter(){  //создаем футер в выборе ур
   return levelsFooter;
 };
 
-function createPlayer(){  //создаем игрока с уникальными методами
+function createPlayer(){               //создаем игрока с уникальными методами
 
   var player = new Playable(res.arrImages[9],0,0,50,50);
   player.direction = false;
@@ -193,7 +193,7 @@ var menu = createMenu(["Играть", "Уровни", "Настройки"],["p
 
 
 //background 
-var matrix = createMatrixBG(); //bg уровня
+var matrix = createMatrixBG();         //bg уровня
 var bgLevel = new Image( res.arrImages[8], 0, 0, C.WIDTH, C.HEIGHT );
 var bgOpacity = new Rect(0, 0, C.WIDTH, C.HEIGHT, "rgba(0, 0, 0, 0.5)");
 
@@ -223,10 +223,10 @@ var pausePopUp = createPausePopUp();
 
 
 //playable obj
-var pl = createPlayer();
-var box = new Playable(res.arrImages[6],0,0,50,50); //бокс
+var pl = createPlayer();                             //персонаж
+var box = new Playable(res.arrImages[6],0,0,50,50);  //бокс
 var door = new Playable(res.arrImages[7],0,0,50,50); //дверь
-var walls = []; //стены на уровне, заполняется выбранным уровнем.
+var walls = [];                                      //стены на уровне, заполняется выбранным уровнем.
 
 
 //videos

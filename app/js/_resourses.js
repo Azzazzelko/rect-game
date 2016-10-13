@@ -1,6 +1,6 @@
 var resourses = {
   images : false,
-  video : false,
+  video  : false,
 
   areLoaded : function(){
     return this.video && this.images
