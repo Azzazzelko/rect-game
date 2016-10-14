@@ -10,6 +10,7 @@ var C      = require('./_const.js');
 var key    = require('./_key.js');
 var res    = require('./_resourses.js');
 
+var a = o.audio;
 var gameLoops = gLoo;
 
 var isBorder = { //принимает объект, возвращает стоит ли с запрашиваеомй границы канвы
@@ -79,8 +80,10 @@ var isNear = {   //принимает 2 объекта, возвращает с�
 
 function canMoveObj(direction){  //(описываем границы движения) разрешает движение в пределах уровня
 
+  a.player.play();               //озвучка движения
   o.pl.direction = o.pl.isMove = hf.directionIs(direction);
   if ( isNear[direction](o.pl, o.box) && !isBorder[direction](o.box) && !isNear[direction](o.box, o.walls) ){      //если рядом с ящиком и ящик не у границ, двигаем.
+    a.crystal.play(1);           //озвучка толкания кристалла
     o.pl.move(direction);
     o.box.move(direction);
   } else if( !isNear[direction](o.pl, o.box) && !isBorder[direction](o.pl) && !isNear[direction](o.pl, o.walls) ){ //если не рядом с ящиком и не рядом с границей, двигаемся.
@@ -144,12 +147,15 @@ window.onmousedown = function(e){ //cобытие нажатия мышки
           switch (o.menu[i].name) {
 
             case "play" :
-            loadLevel(gameLoops.currentLevel);
-            break;
+              a.button.play();
+              a.bgInMenu.stop();
+              loadLevel(gameLoops.currentLevel);
+              break;
 
             case "change_level" :
-            engin.setGameEngine(gameLoops.levels);
-            break;
+              a.button.play();
+              engin.setGameEngine(gameLoops.levels);
+              break;
 
           };
         };
@@ -162,16 +168,17 @@ window.onmousedown = function(e){ //cобытие нажатия мышки
           switch (o.levelsFooter[i].name) {
 
             case "prev" :
-            console.log("Кнопка назад, пока так.");
-            break;
+              console.log("Кнопка назад, пока так.");
+              break;
 
             case "to_menu" :
-            engin.setGameEngine(gameLoops.menu);
-            break;
+              a.button.play();
+              engin.setGameEngine(gameLoops.menu);
+              break;
 
             case "next" :
-            console.log("Кнопка вперед, пока так.");
-            break;
+              console.log("Кнопка вперед, пока так.");
+              break;
 
           };
         };
@@ -179,6 +186,8 @@ window.onmousedown = function(e){ //cобытие нажатия мышки
 
       for ( var i = 0; i < o.bLevelsButtons.length; i++ ){
         if ( isCursorInButton(x,y,o.bLevelsButtons[i]) ){
+          a.button.play();
+          a.bgInMenu.stop();
           gameLoops.currentLevel = i+1;
           loadLevel(i+1);
         };
@@ -187,12 +196,15 @@ window.onmousedown = function(e){ //cобытие нажатия мышки
 
     case "game" :
       if ( isCursorInButton(x,y,o.bPause) ){
+        a.bgInGame.pause();
+        a.button.play();
         sw.pauseTimer();
         o.bgOpacity.draw();
         engin.setGameEngine(gameLoops.pause);
       };
 
       if ( isCursorInButton(x,y,o.bFullScr) ){
+        a.button.play();
         ( !fs.isFullScreen ) ? fs.launchFullScreen(canvas.cnv) : fs.canselFullScreen(); 
       };
       break;
@@ -202,8 +214,11 @@ window.onmousedown = function(e){ //cобытие нажатия мышки
       for ( i in o.winPopUp ){
         if ( isCursorInButton(x,y,o.winPopUp[i]) ){
           if ( o.winPopUp[i].name == "pop_exit" ){
+            a.button.play();
+            a.bgInGame.stop();
             engin.setGameEngine(gameLoops.menu);
           } else if ( o.winPopUp[i].name == "pop_next" && gameLoops.currentLevel != levels.lvlsCount() ){
+            a.button.play();
             sw.reset();
             gameLoops.currentLevel++;
             loadLevel(gameLoops.currentLevel);
@@ -215,20 +230,24 @@ window.onmousedown = function(e){ //cобытие нажатия мышки
     case "pause" :
       for ( i in o.pausePopUp ){
         if ( isCursorInButton(x,y,o.pausePopUp[i]) ){
+          a.button.play();
           switch (o.pausePopUp[i].name) {
 
             case "return" :
               sw.start();
+              a.bgInGame.play();
               engin.setGameEngine(gameLoops.game);
               break;
 
             case "restart" :
               sw.reset();
+              a.bgInGame.stop();
               loadLevel(gameLoops.currentLevel);
               break;
 
             case "exit" :
               sw.reset();
+              a.bgInGame.stop();
               engin.setGameEngine(gameLoops.menu);
               break;
 

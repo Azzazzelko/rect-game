@@ -5,6 +5,8 @@ var engin = require('./_engine.js');
 var res = require('./_resourses.js');
 var preloader = require('./_preloader.js');
 
+var a = o.audio;
+
 module.exports = gameLoops =  {
 
   loader : function(){
@@ -21,6 +23,8 @@ module.exports = gameLoops =  {
   game : function(){
 
     gameLoops.status = "game"; 
+
+    if (a.bgInGame.state == "stop") a.bgInGame.play();
 
     //очистка области
     hf.clearRect(0,0,C.WIDTH,C.HEIGHT);
@@ -52,7 +56,8 @@ module.exports = gameLoops =  {
 
     //если победили
     if ( hf.isWin() ){
-      o.bgOpacity.draw();
+      o.bgOpacity.draw(); //отрисовка затемнения
+      a.win.play();       //озвучка победки
       engin.setGameEngine(gameLoops.win);
     };
   },
@@ -60,6 +65,8 @@ module.exports = gameLoops =  {
   menu : function(){
 
     gameLoops.status = "menu";
+
+    if (a.bgInMenu.state == "stop") a.bgInMenu.play();
 
     hf.clearRect(0,0,C.WIDTH,C.HEIGHT);
 

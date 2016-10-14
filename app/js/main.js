@@ -1,4 +1,5 @@
 var engin = require('./_engine.js'),
+Audio     = require('./classes/Audio.js'),
 Playeble  = require('./classes/Playable.js'),
 Wall      = require('./classes/Wall.js'),
 ImgButton = require('./classes/ImgButton.js'),
@@ -15,11 +16,12 @@ key 	  = require('./_key.js');
 
 engin.gameEngineStart(gameLoops.loader);
 
-// музыку думать
+
+// музыку громкость отрегулировать, найти че-нить другое для меню
+// ховеры запилить в классы.
 
 
 
-
-// настройки - шоб там управлять размерами наверное.. хз пока
+// настройки - шоб там управлять размерами наверное.. хз пока, музыкой управлять!!!
 // шрифт надо подгружать ранее, например отрисовать его в прелойдере невидимо.
 // хайдить кнопки в выборе уровня

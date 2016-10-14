@@ -1,9 +1,10 @@
 var resourses = {
   images : false,
   video  : false,
+  audio  : false,
 
   areLoaded : function(){
-    return this.video && this.images
+    return this.video && this.images && this.audio
   }
 };
 
@@ -51,6 +52,37 @@ function loadImages(arrSrcsOfImages){
 
   return arrImages;
 };
+
+function loadAudio(arrSrcsOfAudio){
+
+  var arrAudio = []; 
+  var count = arrSrcsOfAudio.length;
+  var loadCount = 0;
+
+  for(var i=0; i<count; i++){
+
+    var audio = document.createElement('audio');
+    audio.src = arrSrcsOfAudio[i];
+    audio.oncanplaythrough = function(){
+      loadCount++;
+      if ( loadCount == count ) resourses.audio = true;
+    };
+    
+    arrAudio.push(audio);
+
+  };
+
+  return arrAudio;
+};
+
+var arrAudio = loadAudio([
+  "audio/button-click.mp3",
+  "audio/win-audio.mp3",
+  "audio/player-move.mp3",
+  "audio/crystal-move.mp3",
+  "audio/bg-inGame.mp3",
+  "audio/bg-inMenu.mp3"
+]);
 
 var arrVideos = loadVideo([
   "video/bg.mp4",
@@ -102,7 +134,9 @@ module.exports = {
 
   arrVideos : arrVideos,
 
-  arrImages : arrImages  
+  arrImages : arrImages,
+
+  arrAudio  : arrAudio
 
 };
 

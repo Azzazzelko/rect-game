@@ -229,10 +229,21 @@ var door = new Playable(res.arrImages[7],0,0,50,50); //дверь
 var walls = [];                                      //стены на уровне, заполняется выбранным уровнем.
 
 
-//videos
+//video
 var animateBg = new Video(0, 0, C.WIDTH, C.HEIGHT, res.arrVideos[0]);
 var videoBgLevels = new Video(0, 0, C.WIDTH, C.HEIGHT, res.arrVideos[1]);
 
+
+//audio
+var audio = {
+
+  button   : new Audio(res.arrAudio[0], 0.5),
+  win      : new Audio(res.arrAudio[1], 0.5),
+  player   : new Audio(res.arrAudio[2]),
+  crystal  : new Audio(res.arrAudio[3], 0.1),
+  bgInGame : new Audio(res.arrAudio[4], 0.5),
+  bgInMenu : new Audio(res.arrAudio[5], 0.5),
+};
 
 
 module.exports = objects = {
@@ -258,6 +269,6 @@ module.exports = objects = {
   levelsFooter : levelsFooter,
   animateBg : animateBg,
   videoBgLevels : videoBgLevels,
-  PRELOADER : new Rect(0,0,C.WIDTH,C.HEIGHT,"black")
+  audio : audio
   
 };
