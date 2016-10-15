@@ -80,7 +80,7 @@ var isNear = {   //принимает 2 объекта, возвращает с�
 
 function canMoveObj(direction){  //(описываем границы движения) разрешает движение в пределах уровня
 
-  a.player.play();               //озвучка движения
+  a.player.play(1);               //озвучка движения
   o.pl.direction = o.pl.isMove = hf.directionIs(direction);
   if ( isNear[direction](o.pl, o.box) && !isBorder[direction](o.box) && !isNear[direction](o.box, o.walls) ){      //если рядом с ящиком и ящик не у границ, двигаем.
     a.crystal.play(1);           //озвучка толкания кристалла
@@ -278,7 +278,7 @@ window.onmousemove = function(e){ //события движения мышки, 
       break;
 
     case "game" :
-      ( isCursorInButton(x,y,o.bPause) ) ? o.bPause.hover(1) : o.bPause.hover();
+      ( isCursorInButton(x,y,o.bPause) )   ? o.bPause.hover(1)   : o.bPause.hover();
 
       ( isCursorInButton(x,y,o.bFullScr) ) ? o.bFullScr.hover(1) : o.bFullScr.hover();  
       break;
@@ -299,7 +299,7 @@ window.onmousemove = function(e){ //события движения мышки, 
 
     case "levels" :
       for ( i in o.levelsFooter ){
-        ( isCursorInButton(x,y,o.levelsFooter[i]) ) ? o.levelsFooter[i].hover(1) : o.levelsFooter[i].hover();
+        ( isCursorInButton(x,y,o.levelsFooter[i]) )   ? o.levelsFooter[i].hover(1)   : o.levelsFooter[i].hover();
       };
 
       for ( var i = 0; i < o.bLevelsButtons.length; i++ ){

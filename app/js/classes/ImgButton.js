@@ -3,7 +3,7 @@ var canvas = require('./../_canvas.js');
 var cnv = canvas.cnv;
 var ctx = canvas.ctx;
 
-module.exports = ImgButton = function(img, x, y, w, h, txt, name, fSize, setCenter, noCenter, padd){
+module.exports = ImgButton = function(img, hoverImg, x, y, w, h, txt, name, fSize, setCenter, noCenter, padd){
 
   this.x = x;
   this.y = y;
@@ -17,7 +17,7 @@ module.exports = ImgButton = function(img, x, y, w, h, txt, name, fSize, setCent
   this.setCenter = setCenter || this.x;
   this.noCenter = noCenter || false;
   this.padd = padd || 5;
-  this.hoverImg = false;
+  this.hoverImg = hoverImg;
 
   var metrics = ctx.measureText(this.txt).width; //размер-ширина передаваемого текста
   var _x = ( !this.noCenter ) ? this.setCenter+this.w/2 : this.x+this.padd;
