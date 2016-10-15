@@ -83,13 +83,13 @@ function createLevelsButtons(levels_count){ //создаем кнопки в в�
 
   return bLevelsButtons;
 };
-                                       
+
 function createLevelsFooter(){         //создаем футер в выборе уровня
 
   var levelsFooter = [];
 
-  var bPrev   = new ImgButton( res.arrImages[19], false, 20, C.HEIGHT-10-67, 40, 67, "", "prev", 0 );
-  var bNext   = new ImgButton( res.arrImages[18], false, C.WIDTH-20-40, C.HEIGHT-10-67, 40, 67, "", "next", 0 );
+  var bPrev   = new ImgButton( res.arrImages[19], false,             20,                C.HEIGHT-10-67, 40,  67, "",                 "prev",    0 );
+  var bNext   = new ImgButton( res.arrImages[18], false,             C.WIDTH-20-40,     C.HEIGHT-10-67, 40,  67, "",                 "next",    0 );
   var bToMenu = new ImgButton( res.arrImages[20], res.arrImages[28], C.WIDTH/2 - 320/2, C.HEIGHT-10-67, 320, 67, "Вернуться в меню", "to_menu", 25 );
   bToMenu.txtColor = "#000046";
 
@@ -177,6 +177,37 @@ function createPlayer(){               //создаем игрока с уник
   return player;
 };
 
+function createOptionsBut(){           //cоздаем чекбоксы в настройках
+
+  var arrOpt = [];
+  var buttons = ["Музыка в меню", "Музыка в игре", "Звуки в игре"];
+  var idButtons = ["bMenuMusic", "bGameMusic", "bSfxMusic"];
+
+  for (var i=0; i<buttons.length; i++){
+    arrOpt.push( new ImgButton( res.arrImages[31], false, C.WIDTH/2 - 150, 160+(i*70), 45, 45, buttons[i], idButtons[i], 25, 1, 1, 65 ) );
+    arrOpt[i].fFam = "Buccaneer";
+    arrOpt[i].checked = false;
+    arrOpt[i].check = function(){
+
+      if ( !this.checked ) {
+        _img = this.img;
+        this.img = res.arrImages[30];
+        this.checked = !this.checked;
+      } else {
+        this.img = _img;
+        this.checked = !this.checked;
+      };
+    };
+  };
+
+  var bToMenu = new ImgButton( res.arrImages[20], res.arrImages[28], C.WIDTH/2 - 400/2, C.HEIGHT-10-67, 400, 67, "Вернуться в меню", "to_menu", 25 );
+  bToMenu.txtColor = "#000046";
+
+  arrOpt.push( bToMenu );
+
+
+  return arrOpt;
+};
 
 
 //menu
@@ -200,9 +231,14 @@ var currLevel = new Button( (stopWatch.x+stopWatch.w+bPause.x)/2-140/2, header.h
 
 //change level
 var levelsHeader   = new ImgButton( res.arrImages[2], false, 0, 0, C.WIDTH, 71+C.PDNG, "Выбор уровня", "levels_header", 25 );
-var bLevelsButtons = createLevelsButtons(5);
 var levelsFooter   = createLevelsFooter();
+var bLevelsButtons = createLevelsButtons(5);
 
+
+//options
+var optionsHeader  = new ImgButton( res.arrImages[2], false, 0, 0, C.WIDTH, 71+C.PDNG, "Настройки", "options_header", 25 );
+var optionsMusic   = new Button( C.WIDTH/2-140/2, 90, 140, 40, "transparent", "Музыка", "music", 25, "capture_it" );
+var bOptions       = createOptionsBut();
 
 //win pop-up
 var winPopUp   = createWinPopUp();
@@ -259,6 +295,9 @@ module.exports = objects = {
   levelsFooter   : levelsFooter,
   animateBg      : animateBg,
   videoBgLevels  : videoBgLevels,
-  audio          : audio
-  
+  audio          : audio,
+  optionsHeader  : optionsHeader,
+  optionsMusic   : optionsMusic,
+  bOptions       : bOptions
+
 };

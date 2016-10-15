@@ -18,6 +18,7 @@ module.exports = ImgButton = function(img, hoverImg, x, y, w, h, txt, name, fSiz
   this.noCenter = noCenter || false;
   this.padd = padd || 5;
   this.hoverImg = hoverImg;
+  this.fFam = "capture_it";
 
   var metrics = ctx.measureText(this.txt).width; //размер-ширина передаваемого текста
   var _x = ( !this.noCenter ) ? this.setCenter+this.w/2 : this.x+this.padd;
@@ -28,7 +29,7 @@ module.exports = ImgButton = function(img, hoverImg, x, y, w, h, txt, name, fSiz
 
     ctx.fillStyle = this.txtColor;
     ctx.textAlign = ( !this.noCenter ) ? "center" : "start";
-    ctx.font = this.fSize + 'px capture_it';
+    ctx.font = this.fSize + 'px ' + this.fFam;
     ctx.textBaseline="middle"; 
     ctx.fillText(this.txt, _x, this.y+this.h/2);
   };

@@ -18,6 +18,7 @@ module.exports = gameLoops =  {
     preloader.drawLoadText();
     
     if ( res.resourses.areLoaded() ) engin.setGameEngine(gameLoops.menu);
+    // if ( res.resourses.areLoaded() ) engin.setGameEngine(gameLoops.options);
   },
 
   game : function(){
@@ -77,7 +78,6 @@ module.exports = gameLoops =  {
     for ( i in o.menu ){
       o.menu[i].draw();
     };
-
   },
 
   win : function(){
@@ -120,6 +120,22 @@ module.exports = gameLoops =  {
 
     for ( i in o.levelsFooter ){
       o.levelsFooter[i].draw();
+    };
+  },
+
+  options : function(){
+
+    gameLoops.status = "options";
+
+    hf.clearRect(0,0,C.WIDTH,C.HEIGHT);
+
+    o.videoBgLevels.draw();
+
+    o.optionsHeader.draw();
+    o.optionsMusic.draw();
+
+    for ( i in o.bOptions ){
+      o.bOptions[i].draw();
     };
   },
 

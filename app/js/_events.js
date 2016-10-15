@@ -157,6 +157,11 @@ window.onmousedown = function(e){ //cобытие нажатия мышки
               engin.setGameEngine(gameLoops.levels);
               break;
 
+            case "options" :
+              a.button.play();
+              engin.setGameEngine(gameLoops.options);
+              break;
+
           };
         };
       };
@@ -193,6 +198,43 @@ window.onmousedown = function(e){ //cобытие нажатия мышки
         };
       };
       break;
+
+    case "options" :
+      for ( var i = 0; i < o.bOptions.length; i++ ){
+        if ( isCursorInButton(x,y,o.bOptions[i]) ){
+          switch (o.bOptions[i].name) {
+
+            case "bMenuMusic" :
+              a.button.play(1);
+              o.bOptions[i].check();
+              a.bgInMenu.changeDisable(1); 
+              break;
+
+            case "bGameMusic" :
+              a.button.play(1);
+              o.bOptions[i].check();
+              a.bgInGame.changeDisable();
+              break;
+
+            case "bSfxMusic" :
+              a.button.play(1);
+              o.bOptions[i].check();
+              a.button.changeDisable();
+              a.win.changeDisable();
+              a.player.changeDisable();
+              a.crystal.changeDisable();
+              a.button.play(1);
+              break;
+
+            case "to_menu" :
+              a.button.play();
+              engin.setGameEngine(gameLoops.menu);
+              break;
+
+          };
+        };
+      };
+      break; 
 
     case "game" :
       if ( isCursorInButton(x,y,o.bPause) ){
@@ -307,6 +349,12 @@ window.onmousemove = function(e){ //события движения мышки, 
       };
       break;
   
+    case "options" :
+      for ( var i = 0; i < o.bOptions.length; i++ ){
+        ( isCursorInButton(x,y,o.bOptions[i]) ) ? o.bOptions[i].hover(1) : o.bOptions[i].hover();
+      };
+      break;
+
     case "pause" :
       for ( i in o.pausePopUp ){
         if ( isCursorInButton(x,y,o.pausePopUp[i]) ){

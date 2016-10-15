@@ -124,8 +124,10 @@ var arrImages = loadImages([
   "img/hovers/pause__button-toMenu_hover.svg",    //26
   "img/hovers/levels__button-levels_hover.svg",   //27
   "img/hovers/levels__button-toMenu_hover.svg",   //28
-  "img/hovers/win__button-next_hover.svg"         //29
+  "img/hovers/win__button-next_hover.svg",        //29
 
+  "img/options__uncheck_white.svg",           //30
+  "img/options__check_white.svg"              //31
 ]);
 
 module.exports = { 
