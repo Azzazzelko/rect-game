@@ -19,7 +19,7 @@ module.exports = levels = {
 		];				  //придуманный массив со стенками
 
 		for (var i = 0; i < arr.length; i++){ 
-			_walls.push( new Wall( res.arrImages[5], arr[i][1]*(50+C.PDNG), arr[i][0]*(50+C.PDNG), 50, 50) );
+			_walls.push( new Wall( res.objImages["game__wall.svg"], arr[i][1]*(50+C.PDNG), arr[i][0]*(50+C.PDNG), 50, 50) );
 		};				  //заполняем массив walls
 
 		o.pl.setPosition( 0, 0 );
@@ -39,7 +39,7 @@ module.exports = levels = {
 		];				  
 
 		for (var i = 0; i < arr.length; i++){ 
-			_walls.push( new Wall( res.arrImages[5], arr[i][1]*(50+C.PDNG), arr[i][0]*(50+C.PDNG), 50, 50) );
+			_walls.push( new Wall( res.objImages["game__wall.svg"], arr[i][1]*(50+C.PDNG), arr[i][0]*(50+C.PDNG), 50, 50) );
 		};				  
 
 		o.pl.setPosition( 0, 0+8*(50+C.PDNG) );
@@ -59,7 +59,7 @@ module.exports = levels = {
 		];				  
 
 		for (var i = 0; i < arr.length; i++){ 
-			_walls.push( new Wall( res.arrImages[5], arr[i][1]*(50+C.PDNG), arr[i][0]*(50+C.PDNG), 50, 50) );
+			_walls.push( new Wall( res.objImages["game__wall.svg"], arr[i][1]*(50+C.PDNG), arr[i][0]*(50+C.PDNG), 50, 50) );
 		};				  
 
 		o.pl.setPosition( 0+8*(50+C.PDNG), 0+8*(50+C.PDNG) );
@@ -79,7 +79,7 @@ module.exports = levels = {
 		];				  
 
 		for (var i = 0; i < arr.length; i++){ 
-			_walls.push( new Wall( res.arrImages[5], arr[i][1]*(50+C.PDNG), arr[i][0]*(50+C.PDNG), 50, 50) );
+			_walls.push( new Wall( res.objImages["game__wall.svg"], arr[i][1]*(50+C.PDNG), arr[i][0]*(50+C.PDNG), 50, 50) );
 		};				  
 
 		o.pl.setPosition( 0+7*(50+C.PDNG), 0+8*(50+C.PDNG) );
@@ -99,7 +99,7 @@ module.exports = levels = {
 		];				  
 
 		for (var i = 0; i < arr.length; i++){ 
-			_walls.push( new Wall( res.arrImages[5], arr[i][1]*(50+C.PDNG), arr[i][0]*(50+C.PDNG), 50, 50) );
+			_walls.push( new Wall( res.objImages["game__wall.svg"], arr[i][1]*(50+C.PDNG), arr[i][0]*(50+C.PDNG), 50, 50) );
 		};				  
 
 		o.pl.setPosition( 0, 0+0*(50+C.PDNG) );

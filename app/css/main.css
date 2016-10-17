@@ -19,10 +19,32 @@ body:after {
 }
 
 #canvas {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
 }
+
+
+/*fonts-preload*/
+html {
+    font-family: "capture_it";
+}
+
+html:before {
+    content: "";
+    font-family: "Buccaneer";
+}
+
+html:after {
+    content: "";
+    font-family: "dited";
+}
+
+body:before {
+    content: "";
+    font-family: "aZZ_Tribute_Bold";
+}
+/***************/

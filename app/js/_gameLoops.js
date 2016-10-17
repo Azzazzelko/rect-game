@@ -1,8 +1,8 @@
-var C = require('./_const.js');
-var o = require('./_objects.js');
-var hf = require('./_helperFunctions.js');
-var engin = require('./_engine.js');
-var res = require('./_resourses.js');
+var C         = require('./_const.js');
+var o         = require('./_objects.js');
+var hf        = require('./_helperFunctions.js');
+var engin     = require('./_engine.js');
+var res       = require('./_resourses.js');
 var preloader = require('./_preloader.js');
 
 var a = o.audio;
@@ -18,7 +18,6 @@ module.exports = gameLoops =  {
     preloader.drawLoadText();
     
     if ( res.resourses.areLoaded() ) engin.setGameEngine(gameLoops.menu);
-    // if ( res.resourses.areLoaded() ) engin.setGameEngine(gameLoops.options);
   },
 
   game : function(){
@@ -61,6 +60,7 @@ module.exports = gameLoops =  {
       a.win.play();       //озвучка победки
       engin.setGameEngine(gameLoops.win);
     };
+
   },
 
   menu : function(){
@@ -78,6 +78,7 @@ module.exports = gameLoops =  {
     for ( i in o.menu ){
       o.menu[i].draw();
     };
+
   },
 
   win : function(){
@@ -108,6 +109,8 @@ module.exports = gameLoops =  {
 
     gameLoops.status = "levels";
 
+    if (a.bgInMenu.state == "stop") a.bgInMenu.play();
+
     hf.clearRect(0,0,C.WIDTH,C.HEIGHT);
 
     o.videoBgLevels.draw();
@@ -126,6 +129,8 @@ module.exports = gameLoops =  {
   options : function(){
 
     gameLoops.status = "options";
+
+    if (a.bgInMenu.state == "stop") a.bgInMenu.play();
 
     hf.clearRect(0,0,C.WIDTH,C.HEIGHT);
 

@@ -10,7 +10,7 @@ var resourses = {
 
 function loadVideo(arrSrcsOfVideo){
 
-  var arrVideos = []; 
+  var objVideo = {}; 
   var count = arrSrcsOfVideo.length;
   var loadCount = 0;
 
@@ -24,16 +24,19 @@ function loadVideo(arrSrcsOfVideo){
       if ( loadCount == count ) resourses.video = true;
     };
 
-    arrVideos.push(video);
+    var sliceStart = arrSrcsOfVideo[i].lastIndexOf("\/")+1;
+    var key        = arrSrcsOfVideo[i].slice(sliceStart);
+
+    objVideo[key] = video;
 
   };
 
-  return arrVideos;
+  return objVideo;
 };
 
 function loadImages(arrSrcsOfImages){
 
-  var arrImages = []; 
+  var objImages = []; 
   var count = arrSrcsOfImages.length;
   var loadCount = 0;
 
@@ -46,16 +49,19 @@ function loadImages(arrSrcsOfImages){
       if ( loadCount == count ) resourses.images = true;
     };
     
-    arrImages.push(img);
+    var sliceStart = arrSrcsOfImages[i].lastIndexOf("\/")+1;
+    var key        = arrSrcsOfImages[i].slice(sliceStart);
+    
+    objImages[key] = img;
 
   };
 
-  return arrImages;
+  return objImages;
 };
 
 function loadAudio(arrSrcsOfAudio){
 
-  var arrAudio = []; 
+  var objAudio = []; 
   var count = arrSrcsOfAudio.length;
   var loadCount = 0;
 
@@ -68,14 +74,17 @@ function loadAudio(arrSrcsOfAudio){
       if ( loadCount == count ) resourses.audio = true;
     };
     
-    arrAudio.push(audio);
+    var sliceStart = arrSrcsOfAudio[i].lastIndexOf("\/")+1;
+    var key        = arrSrcsOfAudio[i].slice(sliceStart);
+
+    objAudio[key] = audio;
 
   };
 
-  return arrAudio;
+  return objAudio;
 };
 
-var arrAudio = loadAudio([
+var objAudio = loadAudio([
   "audio/button-click.mp3",
   "audio/win-audio.mp3",
   "audio/player-move.mp3",
@@ -84,12 +93,12 @@ var arrAudio = loadAudio([
   "audio/bg-inMenu.mp3"
 ]);
 
-var arrVideos = loadVideo([
+var objVideo = loadVideo([
   "video/bg.mp4",
   "video/Lightmirror.mp4"
 ]);
 
-var arrImages = loadImages([
+var objImages = loadImages([
   "img/menu__button-menu.svg",                //0 
   "img/menu__logo.png",                       //1
 
@@ -134,11 +143,11 @@ module.exports = {
 
   resourses : resourses,
 
-  arrVideos : arrVideos,
+  objVideo  : objVideo,
 
-  arrImages : arrImages,
+  objImages : objImages,
 
-  arrAudio  : arrAudio
+  objAudio  : objAudio
 
 };
 
