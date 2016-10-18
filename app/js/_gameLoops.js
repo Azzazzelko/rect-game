@@ -60,7 +60,6 @@ module.exports = gameLoops =  {
       a.win.play();       //озвучка победки
       engin.setGameEngine(gameLoops.win);
     };
-
   },
 
   menu : function(){
@@ -78,7 +77,6 @@ module.exports = gameLoops =  {
     for ( i in o.menu ){
       o.menu[i].draw();
     };
-
   },
 
   win : function(){
@@ -122,7 +120,7 @@ module.exports = gameLoops =  {
     };
 
     for ( i in o.levelsFooter ){
-      o.levelsFooter[i].draw();
+      if ( o.levelsFooter[i].name == "to_menu" ) o.levelsFooter[i].draw();
     };
   },
 

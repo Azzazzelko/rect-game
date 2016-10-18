@@ -232,7 +232,7 @@ var currLevel = new Button( (stopWatch.x+stopWatch.w+bPause.x)/2-140/2, header.h
 //change level
 var levelsHeader   = new ImgButton( res.objImages["game__bg-header.svg"], false, 0, 0, C.WIDTH, 71+C.PDNG, "Выбор уровня", "levels_header", 25 );
 var levelsFooter   = createLevelsFooter();
-var bLevelsButtons = createLevelsButtons(5);
+var bLevelsButtons = createLevelsButtons(9);
 
 
 //options

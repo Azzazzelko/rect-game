@@ -8,14 +8,14 @@ module.exports = levels = {
 	lvlsCount : function(){
 		var count = 0;
 		for(key in levels){ count++ };
-			return count-1;
+		return count-1;
 	},
 
 	1 : function(){
 
 		var _walls = [];  //массив с будущепостроенными стенками
 		var arr = [       
-		[1,3],[1,4],[1,5],[2,0],[2,6],[2,8],[3,2],[4,1],[4,3],[4,7],[5,4],[6,4],[6,6],[7,1],[7,8],[8,0],[8,4],[8,5]
+		[0,2],[0,6],[1,1],[1,4],[1,7],[2,2],[2,5],[2,8],[3,0],[3,2],[3,3],[3,5],[3,6],[3,8],[4,2],[4,5],[4,8],[5,1],[5,4],[5,7],[6,2],[6,5],[7,0],[7,2],[7,3],[7,5],[7,6],[7,7],[8,5],
 		];				  //придуманный массив со стенками
 
 		for (var i = 0; i < arr.length; i++){ 
@@ -23,9 +23,9 @@ module.exports = levels = {
 		};				  //заполняем массив walls
 
 		o.pl.setPosition( 0, 0 );
-		o.pl.setDirection( hf.directionIs("right") );
-		o.box.setPosition( 0+2*(50+C.PDNG), 7*(50+C.PDNG) );
-		o.door.setPosition( 0+8*(50+C.PDNG), 0*(50+C.PDNG) );
+		o.pl.setDirection( hf.directionIs("down") );
+		o.box.setPosition( 0+7*(50+C.PDNG), 8*(50+C.PDNG) );
+		o.door.setPosition( 0+6*(50+C.PDNG), 8*(50+C.PDNG) );
 
 		o.walls = _walls;
 
@@ -106,6 +106,86 @@ module.exports = levels = {
 		o.pl.setDirection( hf.directionIs("down") );
 		o.box.setPosition( 0+1*(50+C.PDNG), 0+1*(50+C.PDNG) );
 		o.door.setPosition( 0, 0+8*(50+C.PDNG) );
+
+		o.walls = _walls;
+
+	},
+
+	6 : function(){
+
+		var _walls = [];  
+		var arr = [       
+		[1,3],[1,4],[1,5],[2,0],[2,6],[2,8],[3,2],[4,1],[4,3],[4,7],[5,4],[6,4],[6,6],[7,1],[7,8],[8,0],[8,4],[8,5]
+		];				  
+
+		for (var i = 0; i < arr.length; i++){ 
+			_walls.push( new Wall( res.objImages["game__wall.svg"], arr[i][1]*(50+C.PDNG), arr[i][0]*(50+C.PDNG), 50, 50) );
+		};				  
+
+		o.pl.setPosition( 0, 0 );
+		o.pl.setDirection( hf.directionIs("right") );
+		o.box.setPosition( 0+2*(50+C.PDNG), 7*(50+C.PDNG) );
+		o.door.setPosition( 0+8*(50+C.PDNG), 0*(50+C.PDNG) );
+
+		o.walls = _walls;
+
+	},
+
+	7 : function(){
+
+		var _walls = [];  
+		var arr = [       
+		[0,0],[0,8],[1,3],[1,4],[1,5],[3,1],[3,3],[3,7],[4,1],[4,4],[5,1],[5,7],[7,3],[7,4],[7,5],[7,6],[8,0],[8,8]
+		];				  
+
+		for (var i = 0; i < arr.length; i++){ 
+			_walls.push( new Wall( res.objImages["game__wall.svg"], arr[i][1]*(50+C.PDNG), arr[i][0]*(50+C.PDNG), 50, 50) );
+		};				  
+
+		o.pl.setPosition( 0, 0+1*(50+C.PDNG) );
+		o.pl.setDirection( hf.directionIs("right") );
+		o.box.setPosition( 0+7*(50+C.PDNG), 7*(50+C.PDNG) );
+		o.door.setPosition( 0+3*(50+C.PDNG), 0+4*(50+C.PDNG) );
+
+		o.walls = _walls;
+
+	},
+
+	8 : function(){
+
+		var _walls = [];  
+		var arr = [       
+		[0,2],[1,5],[1,8],[2,1],[2,5],[3,1],[3,7],[4,2],[4,4],[5,2],[5,8],[6,3],[6,5],[6,6],[7,1],[7,3],[7,7]
+		];				  
+
+		for (var i = 0; i < arr.length; i++){ 
+			_walls.push( new Wall( res.objImages["game__wall.svg"], arr[i][1]*(50+C.PDNG), arr[i][0]*(50+C.PDNG), 50, 50) );
+		};				  
+
+		o.pl.setPosition( 0, 0 );
+		o.pl.setDirection( hf.directionIs("down") );
+		o.box.setPosition( 0+5*(50+C.PDNG), 7*(50+C.PDNG) );
+		o.door.setPosition( 0*(50+C.PDNG), 0+7*(50+C.PDNG) );
+
+		o.walls = _walls;
+
+	},
+
+	9 : function(){
+
+		var _walls = [];  
+		var arr = [       
+		[0,0],[0,5],[1,4],[1,5],[1,8],[2,2],[2,7],[3,0],[3,3],[4,3],[4,5],[4,6],[5,0],[5,2],[6,4],[6,5],[7,0],[7,8],[8,1],[8,5]
+		];				  
+
+		for (var i = 0; i < arr.length; i++){ 
+			_walls.push( new Wall( res.objImages["game__wall.svg"], arr[i][1]*(50+C.PDNG), arr[i][0]*(50+C.PDNG), 50, 50) );
+		};				  
+
+		o.pl.setPosition( 8*(50+C.PDNG), 0 );
+		o.pl.setDirection( hf.directionIs("left") );
+		o.box.setPosition( 0+6*(50+C.PDNG), 1*(50+C.PDNG) );
+		o.door.setPosition( 0+3*(50+C.PDNG), 0*(50+C.PDNG) );
 
 		o.walls = _walls;
 
