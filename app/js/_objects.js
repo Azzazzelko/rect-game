@@ -268,7 +268,7 @@ var audio = {
   player   : new Audio(res.objAudio["player-move.mp3"],  0.25),
   crystal  : new Audio(res.objAudio["crystal-move.mp3"], 0.25),
   bgInGame : new Audio(res.objAudio["bg-inGame.mp3"],    0.5),
-  bgInMenu : new Audio(res.objAudio["bg-inMenu.mp3"],    0.0000005),
+  bgInMenu : new Audio(res.objAudio["bg-inMenu.mp3"],    0.5),
 };
 
 
